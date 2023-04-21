@@ -1,0 +1,11 @@
+#itemCount {
+  display: flex;
+}
+
+#add-cart-item-btn {
+  margin-top: 20px;
+}
+
+#select-menu {
+  margin-top: 100px;
+}
