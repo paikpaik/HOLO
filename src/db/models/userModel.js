@@ -34,12 +34,19 @@ class UserModel {
     }
 
     // 사용자 정보 업데이트
-    async update({ userId, update }) {
+    async update(userId, updateData) {
         const filter = { userId };
-        const option = { returnOriginal: false };
+        const option = { returnOriginal: false, new: true };
 
-        const updatedUser = await User.findOneAndUpdate(filter, update, option);
+        const updatedUser = await User.findOneAndUpdate(filter, updateData, option);
         return updatedUser;
+    }
+
+    // 사용자 ID를 사용하여 사용자 삭제
+    async deleteByUserId(userId) {
+        const filter = { userId };
+        const result = await User.findOneAndDelete(filter);
+        return result;
     }
 }
 

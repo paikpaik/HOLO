@@ -1,47 +1,54 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
-const CartService = require('../service/cartService');
-const cartService = new CartService();
+const cartService = require("../service/cartService");
 
-
-router.post('/add', async (req, res) => {
-  const { userId, cartItem } = req.body;
+// 카트 조회
+router.get("/:cartId", async (req, res) => {
   try {
-    const cart = await cartService.addCartItem(userId, cartItem);
-    res.json(cart);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: '카트에 상품을 추가하지 못했습니다.' });
+    const cart = await cartService.getCart(req.params.cartId);
+    res.status(200).json(cart);
+  } catch (error) {
+    res.status(400).send(error.message);
   }
 });
 
+// 카트 아이템 추가
+router.post("/:cartId/items", async (req, res) => {
+  try {
+    const cartItem = req.body;
+    const cart = await cartService.addCartItem(req.params.cartId, cartItem);
+    res.status(201).json(cart);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+// 카트 아이템 삭제
+router.delete("/:cartId/items/:cartItemId", async (req, res) => {
+  try {
+    const cart = await cartService.removeCartItem(
+      req.params.cartId,
+      req.params.cartItemId
+    );
+    res.status(200).json(cart);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+// 카트 아이템 수량 수정
+router.patch("/:cartId/items/:cartItemId", async (req, res) => {
+  try {
+    const quantity = req.body.quantity;
+    const cart = await cartService.updateCartItemQuantity(
+      req.params.cartId,
+      req.params.cartItemId,
+      quantity
+    );
+    res.status(200).json(cart);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
 
 module.exports = router;
-
-
-// // 장바구니 조회 라우터
-// router.get('/api/carts', async (req, res)=> {
-//     const cartView = req.body;
-
-//     try {
-//         await cartService.presentCart(cartView);
-//         res.status(200).send();
-//     } catch (err) {
-//         console.log(err);
-//         res.status(500).send(`${err}`);
-//     }
-// });
-
-// // 장바구니 삭제 라우터
-// router.delete('/api/carts', async (req, res)=> {
-//     const cartInfo = req.body;
-
-//     try {
-//         await cartService.cancelCart(cartInfo);
-//         res.status(200).send();
-//     } catch (err) {
-//         console.log(err);
-//         res.status(500).send(`${err}`);
-//     }
-// });
-

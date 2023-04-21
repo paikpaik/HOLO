@@ -1,62 +1,85 @@
-const mongoose = require('mongoose');
-const CartSchema = require('../schemas/cart');
+const mongoose = require("mongoose");
+const CartSchema = require("../schemas/cart");
 
-const Cart = mongoose.model('carts', CartSchema);
+// CartSchema를 기반으로 한 Cart Mongoose 모델 생성
+const Cart = mongoose.model("carts", CartSchema);
 
 class CartModel {
-   
-    static async findOrCreateCartByUserId(userId) {
-        // 유저 ID로 카트 조회
-        const cart = await Cart.findOne({ userId });
-      
-        // 카트가 없을 경우 새로운 카트 생성
-        if (!cart) {
-          const newCart = new Cart({ userId });
-          await newCart.save();
-          return newCart;
-        }
-      
-        return cart;
-      }
+  // 카트 조회 및 생성
+  async getCart(cartId) {
+    // cartId를 기반으로 해당 장바구니 조회
+    const cart = await Cart.findOne({ cartId });
 
-    async updateCartTotalPrice() {
-      try {
-        let total = 0;
-        for (let i = 0; i < this.cartData.cartItems.length; i++) {
-          const cartItem = this.cartData.cartItems[i];
-          total += cartItem.quantity * cartItem.productId.price;
-        }
-        this.cartData.totalPrice = total;
-        await this.cartData.save();
-      } catch (error) {
-        throw new Error('Error while updating cart total price: ' + error.message);
-      }
+    // 조회된 장바구니가 없다면 메시지 반환
+    if (!cart) {
+      return "장바구니 없음";
     }
-  
-    static async addCartItem(userId, cartItem) {
-        const cart = await Cart.findOrCreateCartByUserId(userId);
-    
-        // 이미 추가된 상품인 경우 수량 업데이트
-        const existingItemIndex = cart.cartItems.findIndex(
-          (item) => item.productId.toString() === cartItem.productId.toString()
-        );
-        if (existingItemIndex >= 0) {
-          cart.cartItems[existingItemIndex].quantity += cartItem.quantity;
-        } else {
-          cart.cartItems.push(cartItem);
-        }
-    
-        // 카트 아이템들의 가격 합산하여 카트의 총 가격 업데이트
-        let totalPrice = 0;
-        cart.cartItems.forEach((item) => {
-          totalPrice += item.productId.price * item.quantity;
-        });
-        cart.totalPrice = totalPrice;
-    
-        await cart.save();
-        return cart;
-      }
-} 
+
+    // 장바구니의 cartItems 배열을 확장하여 실제 카트 아이템 객체를 포함시킨다.
+    await cart.populate("cartItems").execPopulate();
+    return cart;
+  }
+
+  //카트 아이템 추가
+  async addCartItem(cartId, cartItem) {
+    // cartId를 기반으로 해당 장바구니 조회
+    const cart = await Cart.findOne({ cartId });
+
+    // 조회된 장바구니가 없다면 새로운 장바구니를 생성한다.
+    if (!cart) {
+      return await Cart.create({
+        cartId,
+        userId: cartItem.userId,
+        cartItems: [cartItem],
+        totalPrice: cartItem.quantity * cartItem.productId.price,
+      });
+    }
+
+    // 카트 아이템 추가
+    cart.cartItems.push(cartItem);
+    cart.totalPrice += cartItem.quantity * cartItem.productId.price;
+
+    // 장바구니 업데이트
+    await cart.save();
+
+    // 업데이트된 장바구니를 반환
+    return cart;
+  }
+
+  // 카트 아이템 수량 조정 및 삭제
+  async removeCartItem(cartId, cartItemId) {
+    // cartId를 기반으로 해당 장바구니 조회
+    const cart = await Cart.findOne({ cartId });
+
+    // 조회된 장바구니가 없다면 메시지 반환
+    if (!cart) {
+      return "삭제할 장바구니 없음";
+    }
+    // 장바구니에서 카트 아이템 삭제
+    const cartItemIndex = cart.cartItems.findIndex(
+      (cartItem) => cartItem._id.toString() === cartItemId
+    );
+    if (cartItemIndex === -1) {
+      return null;
+    }
+
+    const removedCartItem = cart.cartItems.splice(cartItemIndex, 1)[0];
+
+    // 카트 아이템이 1개 이상인 경우
+    if (cart.cartItems.length > 0) {
+      cart.totalPrice -=
+        removedCartItem.quantity * removedCartItem.productId.price;
+    } else {
+      cart.totalPrice = 0;
+    }
+
+    // 장바구니 업데이트
+    await cart.save();
+
+    // 업데이트된 장바구니를 반환
+    return cart;
+  }
+}
 // cartModel 인스턴스 생성
 const cartModel = new CartModel();
 
