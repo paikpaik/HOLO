@@ -1,0 +1,20 @@
+#register-form-wrapper{
+    margin: 30px 0;
+    text-align: left;
+}
+#register-form-wrapper > h1{
+    text-align: center;
+}
+#term-agree-wrapper {
+    align-items: center;
+}
+#term-detail{
+    font-size: 8px;
+    text-align: right;
+}
+#term-detail, #term-agreement{
+    padding: 0;
+}
+#register{
+    margin: 20px 0;
+}
