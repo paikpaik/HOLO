@@ -13,7 +13,7 @@ router.get("/:cartId", async (req, res) => {
 });
 
 // 카트 아이템 추가
-router.post("/:cartId/items", async (req, res) => {
+router.post("/:cartId/addItem", async (req, res) => {
   try {
     const cartItem = req.body;
     console.log(cartItem);
@@ -25,7 +25,7 @@ router.post("/:cartId/items", async (req, res) => {
 });
 
 // 카트 아이템 삭제
-router.delete("/:cartId/items/:cartItemId", async (req, res) => {
+router.delete("/:cartId/delete/:cartItemId", async (req, res) => {
   try {
     const cart = await cartService.removeCartItem(
       req.params.cartId,
@@ -38,7 +38,7 @@ router.delete("/:cartId/items/:cartItemId", async (req, res) => {
 });
 
 // 카트 아이템 수량 수정
-router.patch("/:cartId/items/:cartItemId", async (req, res) => {
+router.patch("/:cartId/itemQuantity/:cartItemId", async (req, res) => {
   try {
     const quantity = req.body.quantity;
     const cart = await cartService.updateCartItemQuantity(
