@@ -8,6 +8,10 @@ app.get("/", (req, res) => {
   res.send("TEST PAGE");
 });
 
+app.get("/order-completed", (req, res) => {
+  res.send("주문완료!");
+});
+
 app.listen(port, () => {
   console.log(`정상적으로 서버를 시작하였습니다.  http://localhost:${port}`);
 }); // 서버 실행
