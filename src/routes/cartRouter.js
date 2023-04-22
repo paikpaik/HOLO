@@ -16,6 +16,7 @@ router.get("/:cartId", async (req, res) => {
 router.post("/:cartId/items", async (req, res) => {
   try {
     const cartItem = req.body;
+    console.log(cartItem);
     const cart = await cartService.addCartItem(req.params.cartId, cartItem);
     res.status(201).json(cart);
   } catch (error) {

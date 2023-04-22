@@ -12,7 +12,14 @@ class CartService {
 
   // 카트 아이템 추가
   async addCartItem(cartId, cartItem) {
-    const cart = await cartModel.addCartItem(cartId, cartItem);
+    const { userId, productId, quantity } = cartItem;
+    console.log("서비스.js: " + userId);
+    //objectID만 저장되고 나머지는 디비에 저장이 안됨
+    const cart = await cartModel.addCartItem(cartId, {
+      userId,
+      productId,
+      quantity: parseInt(quantity),
+    });
     return cart;
   }
 
