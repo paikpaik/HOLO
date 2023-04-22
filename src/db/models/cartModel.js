@@ -16,6 +16,7 @@ class CartModel {
     }
 
     // 장바구니의 cartItems 배열을 확장하여 실제 카트 아이템 객체를 포함시킨다.
+    //Cannot populate path `cartItems` because it is not in your schema. Set the `strictPopulate` option to false to override.
     await cart.populate("cartItems").execPopulate();
     return cart;
   }
