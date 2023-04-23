@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const userService = require('../services/userService'); // 유저 서비스 불러오기
+const userService = require('../service/userService'); // 유저 서비스 불러오기
 const loginRequired = require('../middlewares/login-required'); // 로그인 확인 미들웨어 불러오기 (로그인이 필요한 기능이 있을시 해당 라우터에 사용됨)
 
 // 회원가입 라우터

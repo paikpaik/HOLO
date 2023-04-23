@@ -21,7 +21,7 @@ class UserModel {
     async create(userInfo) {
 
         // 입력된 phoneNumber 값을 문자열로 변경해줍니다.
-        userInfo.phoneNumber = String(userInfo.phoneNumber);
+        // userInfo.phoneNumber = String(userInfo.phoneNumber);
 
         const createdNewUser = await User.create(userInfo);
         return createdNewUser;

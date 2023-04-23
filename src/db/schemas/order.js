@@ -44,7 +44,7 @@ const OrderSchema = new Schema({
         ref: 'OrderItem',
         required: true,
     }],
-    ShippingAddress: {
+    shippingAddress: {
         type: String,
         required: true,
         default: function () {
@@ -70,3 +70,5 @@ const OrderSchema = new Schema({
         timestamps: true,
 
     });
+
+module.exports = { OrderItemSchema, OrderSchema };
