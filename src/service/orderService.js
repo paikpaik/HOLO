@@ -36,7 +36,7 @@ class OrderService {
   async createOrder(
     userId,
     cartId,
-    orderItems,
+    orderItems = [],
     shippingAddress,
     totalPrice,
     totalDiscount
@@ -45,10 +45,13 @@ class OrderService {
       const newOrder = await Order.createOrder({
         userId,
         cartId,
-        orderItems,
+        orderItems: orderItems.map((item) => ({
+          productId: item.item,
+          quantity: item.count,
+        })),
         shippingAddress,
-        totalPrice,
-        totalDiscount,
+        totalPrice: parseFloat(totalPrice),
+        totalDiscount: parseFloat(totalDiscount),
         status: "pending", // 주문 상태 초기값 설정
       });
 
@@ -117,3 +120,27 @@ class OrderService {
 const orderService = new OrderService();
 
 module.exports = orderService;
+
+//더미오더생성테스트
+const dummyOrder = {
+  userId: "john123",
+  cartId: "cart123",
+  orderItems: [
+    { item: "item1", count: 2 },
+    { item: "item2", count: 1 },
+  ],
+  shippingAddress: "123 Main St, Anytown USA",
+  status: "pending",
+  totalPrice: 100,
+  totalDiscount: 5,
+};
+
+orderService
+  .createOrder(dummyOrder) //더미오더 정상출력
+  .then((result) => {
+    console.log("새 주문 생성:", result); //{ _id: new ObjectId("644497ebf474bf854119b827"), __v: 0 } 만출력
+    console.log(dummyOrder);
+  })
+  .catch((err) => {
+    console.error("Error creating new order:", err);
+  });
