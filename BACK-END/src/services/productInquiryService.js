@@ -16,6 +16,7 @@ async function updateProductInquiry(inquiryId, updatedInquiry) {
   const updated = await ProductInquiry.findByIdAndUpdate(
     inquiryId,
     updatedInquiry,
+    // 업데이트 된 문의 객체를 반환
     { new: true }
   );
   return updated;
