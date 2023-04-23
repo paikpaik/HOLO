@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/users", userRouter);
 
 // cart 라우터 사용
-app.use("/cart", cartRouter);
+app.use("api/cart", cartRouter);
 
 // app 객체 모듈로 내보내기
 module.exports = app;

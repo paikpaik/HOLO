@@ -21,16 +21,19 @@ class CartModel {
     return cart;
   }
 
-  //카트 아이템 추가
-  async addCartItem(cartId, cartItem) {
-    // cartId를 기반으로 해당 장바구니 조회
-    const cart = await Cart.findOne({ cartId });
+  // 카트 아이템 추가
+  async addCartItem(cartId, cartItem, userId) {
+    // 만약 userId가 없다면 임의의 문자열로 생성
+    userId = userId || Math.random().toString(36).substring(2, 15);
+
+    // cartId와 userId를 기반으로 해당 장바구니 조회
+    const cart = await Cart.findOne({ cartId, userId });
 
     // 조회된 장바구니가 없다면 새로운 장바구니를 생성한다.
     if (!cart) {
       return await Cart.create({
         cartId,
-        userId: cartItem.userId,
+        userId,
         cartItems: [cartItem],
         totalPrice: cartItem.quantity * cartItem.productId.price,
       });

@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const cartService = require("../service/cartService");
 
+module.exports = router;
 // 카트 조회
 router.get("/:cartId", async (req, res) => {
   try {
@@ -13,7 +14,7 @@ router.get("/:cartId", async (req, res) => {
 });
 
 // 카트 아이템 추가
-router.post("/:cartId/addItem", async (req, res) => {
+router.post(":cartId/cartItems", async (req, res) => {
   try {
     const cartItem = req.body;
     console.log(cartItem);
@@ -25,7 +26,7 @@ router.post("/:cartId/addItem", async (req, res) => {
 });
 
 // 카트 아이템 삭제
-router.delete("/:cartId/delete/:cartItemId", async (req, res) => {
+router.delete("/:cartId/delete/:cartItemsId", async (req, res) => {
   try {
     const cart = await cartService.removeCartItem(
       req.params.cartId,
@@ -38,7 +39,7 @@ router.delete("/:cartId/delete/:cartItemId", async (req, res) => {
 });
 
 // 카트 아이템 수량 수정
-router.patch("/:cartId/itemQuantity/:cartItemId", async (req, res) => {
+router.patch("/:cartId/items/:cartItemsId/quantity", async (req, res) => {
   try {
     const quantity = req.body.quantity;
     const cart = await cartService.updateCartItemQuantity(
@@ -51,5 +52,3 @@ router.patch("/:cartId/itemQuantity/:cartItemId", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
-
-module.exports = router;

@@ -24,7 +24,7 @@ const CartSchema = new Schema(
     },
     userId: {
       type: String,
-      required: true,
+      required: false, //비회원도 이용하게 함
     },
     cartItems: [
       {
