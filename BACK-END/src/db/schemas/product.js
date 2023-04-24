@@ -69,3 +69,4 @@ const imageSchema = new Schema({
     },
   ],
 });
+

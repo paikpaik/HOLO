@@ -1,9 +1,10 @@
-const Product = require('../models/productModel');
+const { Product } = require('../db/models/productModel');
+const { Category } = require('../db/models/categoryModel');
 
 //카테고리ID가 category인 모든 상품 조회하여 반환
-async function getProductsByCategory(category) {
+async function getProductsByCategory(categoryNo) {
   try {
-    const products = await Product.find({ categoryId: category }).exec();
+    const products = await Product.find({ categoryNo }).exec();
     return products;
   } catch (error) {
     console.error(error);

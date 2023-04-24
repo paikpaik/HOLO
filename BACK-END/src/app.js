@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/users', userRouter);
 // products 라우터 사용
 app.use('/api/products', productRouter);
-app.use('/', categoryRouter);
+app.use('api/', categoryRouter);
 
 // app 객체 모듈로 내보내기
 module.exports = app;

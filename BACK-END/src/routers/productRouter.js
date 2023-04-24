@@ -1,6 +1,6 @@
 const express = require("express");
 const ProductService = require("../services/productService");
-const productInquiryService = require("../services/productInquiryService");
+const ProductInquiryService = require("../services/productInquiryService");
 class ProductRouter {
   constructor() {
     this.router = express.Router();
@@ -91,14 +91,14 @@ class ProductRouter {
 
     // 모든 상품 문의 조회
     this.router.get("/inquiries", async (req, res) => {
-      const inquiries = await productInquiryService.getAllProductInquiries();
+      const inquiries = await ProductInquiryService.getAllProductInquiries();
       res.json(inquiries);
     });
 
     // 상품 문의 생성
     this.router.post("/inquiries", async (req, res) => {
       const inquiry = req.body;
-      const savedInquiry = await productInquiryService.createProductInquiry(
+      const savedInquiry = await ProductInquiryService.createProductInquiry(
         inquiry
       );
       res.json(savedInquiry);
@@ -108,7 +108,7 @@ class ProductRouter {
     this.router.put("/inquiries/:inquiryId", async (req, res) => {
       const inquiryId = req.params.inquiryId;
       const updatedInquiry = req.body;
-      const updated = await productInquiryService.updateProductInquiry(
+      const updated = await ProductInquiryService.updateProductInquiry(
         inquiryId,
         updatedInquiry
       );
@@ -118,7 +118,7 @@ class ProductRouter {
     // 상품 문의 삭제
     this.router.delete("/inquiries/:inquiryId", async (req, res) => {
       const inquiryId = req.params.inquiryId;
-      await productInquiryService.deleteProductInquiry(inquiryId);
+      await ProductInquiryService.deleteProductInquiry(inquiryId);
       res.sendStatus(204); // No Content
     });
   }

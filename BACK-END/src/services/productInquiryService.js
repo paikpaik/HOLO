@@ -1,3 +1,4 @@
+const { ProductInquiry } = require('../db/models/productInquiryModel');
 // 모든 상품 문의 조회
 async function getAllProductInquiries() {
   const inquiries = await ProductInquiry.find();
@@ -26,3 +27,5 @@ async function updateProductInquiry(inquiryId, updatedInquiry) {
 async function deleteProductInquiry(inquiryId) {
   await ProductInquiry.findByIdAndDelete(inquiryId);
 }
+
+module.exports = { getAllProductInquiries, createProductInquiry, updateProductInquiry, deleteProductInquiry}
