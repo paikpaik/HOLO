@@ -1,7 +1,7 @@
 import * as API from "../../api/api.js";
 
 const addCartItemBtn = document.getElementById("add-cart-item-btn");
-const inquiriesBtn = document.getElementById("inquiries"); // 상품문의
+const inquiriesBtn = document.getElementById("inquiries");
 const amount = document.getElementById("amount");
 const decreaseBtn = document.getElementById("decrease-btn");
 const increaseBtn = document.getElementById("increase-btn");
@@ -16,12 +16,22 @@ const infoBtn = document.getElementById("info");
 //   return await API.post("/api/products/inquiries");
 // }
 
-// 임시 정보
-let menu = {
-  product: { productName: "돈가스", price: "19,000" },
-  amount: Number(amount.textContent),
-};
+let menu = [
+  {
+    product: { productName: "메뉴이름1", price: "19,000" },
+    amount: Number(amount.textContent),
+  },
+  {
+    product: { productName: "메뉴이름2", price: "32,000" },
+    amount: Number(amount.textContent),
+  },
+  {
+    product: { productName: "메뉴이름3", price: "21,000" },
+    amount: Number(amount.textContent),
+  },
+];
 
+// 상품 수량 조절
 const decreaseBtnHandler = () => {
   if (amount.innerText > 1) {
     amount.innerText = Number(amount.innerText) - 1;
@@ -34,15 +44,18 @@ const increaseBtnHandler = () => {
   menu.amount += 1;
 };
 
+// setStorage
 const addCartItemBtnHandler = () => {
   window.localStorage.setItem("menu", JSON.stringify(menu));
 };
 
+// 상품 상세페이지 HTML
 const detailInfo = ` 
 <div class="row">
   <img src="..." class="rounded float-start" alt="이미지" />
 </div>`;
 
+// 상품 문의 HTML
 const inquiriesList = `
   <div class="row">
     <div class="question-box">
@@ -90,6 +103,7 @@ const inquiriesList = `
   </div>
 </div>`;
 
+// 상품 문의 작성 HTML
 const inquiriesbox = `
 <div class="container">
 <div class="row">
@@ -120,16 +134,19 @@ const inquiriesbox = `
 </div>
 </div>`;
 
+// 상품 상세페이지 버튼
 const infoBtnHandler = () => {
   mainContent.innerHTML = detailInfo;
   infoBtn.className = "btn btn-success";
   inquiriesBtn.className = "btn btn-secondary btn-lr";
 };
 
+// 상품 문의 작성 버튼
 const inquiriesListBtnHandler = () => {
   mainContent.insertAdjacentHTML("afterend", inquiriesbox);
 };
 
+// 상품 문의 버튼
 const inquiriesBtnHandler = () => {
   mainContent.innerHTML = inquiriesList;
   infoBtn.className = "btn btn-secondary btn-lr";
