@@ -1,0 +1,66 @@
+.col {
+  padding: 0;
+}
+
+.btn-container {
+  display: flex;
+  margin: 10px 0 15px 0;
+  justify-content: center;
+}
+
+.btn-management-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-light {
+  border: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+.btn-product-delete {
+  margin-right: 20px;
+}
+
+.menu-contents {
+  padding: 20px;
+}
+
+.product-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btn-select-all {
+  background: none;
+  border: none;
+  color: #969696;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.btn-select-all i {
+  margin-right: 5px;
+}
+
+.form-check {
+  padding-left: 0;
+  margin-right: 5px;
+}
+
+.btn-select {
+  display: none;
+}
+
+i.bi-check-circle {
+  color: #969696;
+  cursor: pointer;
+}
+i.bi-check-circle-fill {
+  color: green;
+  cursor: pointer;
+}
+.order-item {
+  width: 100%;
+}
