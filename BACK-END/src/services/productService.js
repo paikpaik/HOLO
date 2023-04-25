@@ -1,39 +1,38 @@
-// const { Category } = require('../db/models/categoryModel');
+const { Category } = require('../db/models/categoryModel');
 const { Product } = require('../db/models/productModel');
 const errorHandler = require('../middlewares/error-handler')
 
 const productService = {
   // 관리자 카테고리 추가
   async addCategory(req, res, next){
-    try{
-      const { category } = req.body;
-      const addedCategory = await Product.updateMany(
-        { category: { $exists: false } },
-        { $set: { category: category } },
-        { new: true }
-      );
-      // updateMany를 사용해서 업데이트된 document의 수를 반환. 0이면 동일하다는 뜻.
-      if(addedCategory.nModified === 0){
-        throw new Error('추가하신 카테고리가 이미 존재합니다.')
+    try {
+      const category = req.body.category;
+      if(!category){
+        throw new Error('추가할 카테고리가 존재하지 않습니다.')
       }
-      res.status(201).json({ message: '카테고리 추가 성공', data: addedCategory });
-    }catch(error){
+      const existingCategory = await Product.distinct('category')
+      if(existingCategory.includes(category)){
+        throw new Error('해당 카테고리가 이미 존재합니다.')
+      }
+
+      const newCategory = await Category.create({ category: category })
+      res.status(201).json({ message: '카테고리 추가 성공', data: newCategory });
+    } catch(error){
       errorHandler(error, req, res, next);
     }
   },
 
   // 관리자 카테고리 수정
-  async updateCategory(rea, res, next){
+  async updateCategory(req, res, next){
     try{
       const { category, newCategory } = req.body;
-      const updateCategory = await Product.updateMany(
-        { category },
+      const updateCategory = await Category.findOneAndUpdate(
+        { category: category },
         { category: newCategory },
         { new: true }
       );
-      // updateMany를 사용해서 업데이트된 document의 수를 반환. 0이면 동일하다는 뜻.
-      if(updateCategory.nModified === 0){
-        throw new Error('수정하신 내용은 기존과 동일합니다.');
+      if(!updateCategory){
+        throw new Error('수정할 카테고리가 존재하지 않습니다.');
       }
       res.status(201).json({ message: '카테고리 수정 성공', data: updateCategory });
     }catch(error){
@@ -44,10 +43,8 @@ const productService = {
   // 관리자 카테고리 삭제
   async deleteCategory(req, res, next){
     try{
-      const { category } = req.params;
-      // 해당 카테고리를 삭제시 모든 상품이 삭제.
-      await Product.deleteMany({ category });
-      const deletedCategory = await Product.findOneAndDelete({ category });
+      const { category } = req.body;
+      const deletedCategory = await Category.findOneAndDelete({ category: category });
       if(!deletedCategory){
         throw new Error('삭제할 카테고리가 존재하지 않습니다.');
       }
@@ -185,6 +182,9 @@ const productService = {
     try{
       // discountRate가 30 이상인 상품 조회
       const discountedProducts = await Product.find({ discountRate: { $gte: 30 } });
+      if(discountedProducts.length === 0){
+        return res.status(404).json({ message: '조회된 할인 상품이 없습니다.' });
+      }
       res.status(200).json({ message: '할인 상품 목록 조회 성공', data: discountedProducts })
     }catch(error){
       errorHandler(error, req, res, next);
@@ -192,7 +192,7 @@ const productService = {
   },
 
   // 사용자가 인기상품 카테고리를 선택시 purchaseNum 10이상인 모든 상품을 조회
-  async getPopularProducts(rea, res, next){
+  async getPopularProducts(req, res, next){
     try{
       // purchaseNum이 10 이상인 상품 조회
       const popularProducts = await Product.find({ purchaseNum: { $gte: 10 } });
