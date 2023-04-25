@@ -2,46 +2,41 @@ import * as API from "../../api/api.js";
 
 const addCartItemBtn = document.getElementById("add-cart-item-btn");
 const inquiriesBtn = document.getElementById("inquiries");
-const amount = document.getElementById("amount");
+const quantity = document.getElementById("quantity");
 const decreaseBtn = document.getElementById("decrease-btn");
 const increaseBtn = document.getElementById("increase-btn");
 const mainContent = document.querySelector(".main-content");
 const infoBtn = document.getElementById("info");
 
-// async function data() {
-//   return await API.get("/api/products/product");
-// }
+async function data() {
+  return await API.get("/api/products/product");
+}
 
-// async function createInquiries() {
-//   return await API.post("/api/products/inquiries");
-// }
+async function createInquiries() {
+  return await API.post("/api/products/inquiries");
+}
 
 let menu = [
   {
-    product: { productName: "메뉴이름1", price: "19,000" },
-    amount: Number(amount.textContent),
-  },
-  {
-    product: { productName: "메뉴이름2", price: "32,000" },
-    amount: Number(amount.textContent),
-  },
-  {
-    product: { productName: "메뉴이름3", price: "21,000" },
-    amount: Number(amount.textContent),
+    orderItems: {
+      productNo: "메뉴이름1",
+      price: "19,000",
+      quantity: Number(quantity.textContent),
+    },
   },
 ];
 
 // 상품 수량 조절
 const decreaseBtnHandler = () => {
-  if (amount.innerText > 1) {
-    amount.innerText = Number(amount.innerText) - 1;
-    menu.amount -= 1;
+  if (quantity.innerText > 1) {
+    quantity.innerText = Number(quantity.innerText) - 1;
+    menu.quantity -= 1;
   }
 };
 
 const increaseBtnHandler = () => {
-  amount.innerText = Number(amount.innerText) + 1;
-  menu.amount += 1;
+  quantity.innerText = Number(quantity.innerText) + 1;
+  menu.quantity += 1;
 };
 
 // setStorage
