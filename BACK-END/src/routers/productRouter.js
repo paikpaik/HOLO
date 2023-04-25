@@ -11,7 +11,7 @@ router.patch('/admin/category', productService.updateCategory)
 router.delete('/admin/category', productService.deleteCategory)
 // 관리자 상품 추가, 됨
 router.post('/admin', productService.addProduct);
-// 관리자 상품 수정
+// 관리자 상품 수정, 됨
 router.patch('/admin/:productId', productService.updateProduct);
 // 관리자 상품 삭제
 router.delete('/admin/:productId', productService.deleteProduct);

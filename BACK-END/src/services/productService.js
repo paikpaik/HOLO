@@ -100,7 +100,7 @@ const productService = {
   // 관리자 상품 수정
   async updateProduct(req, res, next){
     try{
-      const productId = req.params.id;
+      const productId = req.params.productId;
       const { 
         productNo, 
         productName, 
