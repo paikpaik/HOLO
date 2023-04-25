@@ -3,21 +3,17 @@ const { Schema } = mongoose;
 
 const productSchema = new Schema(
   {
-    productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
+    productNo: {
+      type: String,
       required: true,
     },
     productName: {
       type: String,
       required: true,
     },
-    categoryNo: {
-      type: Number,
+    category: {
+      type: String,
       required: true,
-      unique: true,
-      index: true,
-      trim: true,
     },
     price: {
       type: Number,
@@ -52,21 +48,21 @@ const productSchema = new Schema(
     originLabel: {
       type: String,
     },
-  },{
-    timestamps: true,
   }
 );
 
-const imageSchema = new Schema({
-  imageUrl: {
-    type: String,
-    required: true
-  },
-  thumbnailUrls: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
-});
+module.exports = productSchema;
+
+// const imageSchema = new Schema({
+//   imageUrl: {
+//     type: String,
+//     required: true
+//   },
+//   thumbnailUrls: [
+//     {
+//       type: String,
+//       required: true,
+//     },
+//   ],
+// });
 

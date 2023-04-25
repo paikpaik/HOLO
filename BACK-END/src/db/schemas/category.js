@@ -2,22 +2,17 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 const categorySchema = new Schema(
-  {
-    categoryNo: {
-      type: Number,
+  { 
+    // 블록 변수 충돌로 name으로 정했습니다.
+    name: {
+      type: String,
       required: true,
       unique: true,
-      index: true,
     },
-    category: {
-      type: String,
-      required: true,
-    },
-    subCategory: {
-      type: String,
-      required: true,
-    },
-  },{
+  },
+  {
     timestamps: true,
   }
 );
+
+module.exports = categorySchema;
