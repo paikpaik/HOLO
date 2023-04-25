@@ -1,11 +1,7 @@
 const { Router } = require('express');
 const router = Router();
-<<<<<<< HEAD
-const userService = require('../service/userService');
-=======
-const userService = require('../services/userService'); // 유저 서비스 불러오기
+const userService = require('../service/userService'); // 유저 서비스 불러오기
 const loginRequired = require('../middlewares/login-required'); // 로그인 확인 미들웨어 불러오기 (로그인이 필요한 기능이 있을시 해당 라우터에 사용됨)
->>>>>>> feature-BE-signUp
 
 // 회원가입 라우터
 router.post('/register', async (req, res) => {
@@ -25,9 +21,23 @@ router.post('/register', async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
-module.exports = router;
-=======
+// 아이디 중복 확인 라우터
+router.post('/check-userid', async (req, res) => {
+    try {
+        const { userId } = req.body;
+        const isDuplicated = await userService.isUserIdDuplicated(userId);
+
+        if (isDuplicated) {
+            res.status(200).json({ message: '중복된 아이디입니다.', isDuplicated: true });
+        } else {
+            res.status(200).json({ message: '사용 가능한 아이디입니다.', isDuplicated: false });
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(`${err}`);
+    }
+});
+
 // 로그인 라우터
 router.post('/login', async (req, res) => {
     try {
@@ -99,4 +109,3 @@ router.delete('/delete-user-info', loginRequired, async (req, res) => {
 });
 
 module.exports = router;
->>>>>>> feature-BE-signUp
