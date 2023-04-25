@@ -1,0 +1,46 @@
+#itemCount {
+  display: flex;
+  align-items: center;
+}
+
+#add-cart-item-btn {
+  margin-top: 20px;
+}
+
+#select-menu {
+  margin-top: 100px;
+}
+
+.btn {
+  margin: 0 5px 0 5px;
+  display: flex;
+  align-items: center;
+}
+
+.col {
+  margin-top: 20px;
+}
+
+.btn-success {
+  display: flex;
+  justify-content: center;
+}
+.btn-secondary {
+  display: flex;
+  justify-content: center;
+}
+
+.edit-btn {
+  display: flex;
+  justify-content: right;
+}
+
+.write-input {
+  display: flex;
+  justify-content: center;
+}
+
+.btnAddTxt {
+  display: flex;
+  justify-content: right;
+}

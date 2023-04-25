@@ -1,0 +1,212 @@
+main {
+  width: 90%;
+  margin-left: 5%;
+  padding: 50px 0;
+  font-size: 14px;
+}
+
+.mypage-contents {
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+}
+
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 30px;
+  min-width: 200px;
+}
+
+.mypage-navbar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #fff;
+  border: #e4e4e4 solid 1px;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 15px;
+}
+
+.mypage-navbar li {
+  margin: 5px 0;
+}
+
+.mypage-navbar li a {
+  color: #666;
+  font-size: 14px;
+}
+
+.mypage-navbar li a:hover {
+  color: var(--bs-green);
+}
+
+.mypage-navbar li a.active {
+  color: var(--bs-green);
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 230px);
+}
+
+.menu-contents {
+  margin-top: 15px;
+  border: #e4e4e4 solid 1px;
+  border-radius: 5px;
+  height: 100%;
+  padding: 30px 35px;
+}
+
+/* 주문목록/배송조회 */
+.order-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border: #e4e4e4 solid 1px;
+}
+
+.order-item .product-img {
+  width: 220px;
+  height: 220px;
+  margin-right: 20px;
+  background-color: gray;
+}
+
+.order-item .product-info {
+  display: flex;
+  margin: 0 20px;
+}
+
+.order-item .product-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-item .product-detail p {
+  margin: 5px;
+}
+
+.order-item .order-item-btn-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-item .order-item-btn-container button {
+  margin: 10px 0;
+}
+
+/* 회원정보 수정 */
+#userModify {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#userModify form {
+  display: flex;
+  flex-direction: column;
+}
+#userModify #userModifyForm {
+  display: none;
+}
+#userModify form input::placeholder {
+  font-size: 0.7rem;
+  vertical-align: center;
+}
+
+#userModify form .btn-container {
+  padding-right: 0;
+}
+#userModify form .btn-container button {
+  font-size: 12px;
+}
+
+.withdrawal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 15px 0;
+}
+.withdrawal .withdrawal-message {
+  font-size: 10px;
+}
+.withdrawal #withdrawalBtn {
+  font-size: 10px;
+  padding: 3px 5px;
+  margin-left: 5px;
+}
+
+@media screen and (min-width: 576px) {
+  #userModify form {
+    width: 350px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    left: 0;
+  }
+  .mypage-contents {
+    flex-direction: column;
+    margin-left: 0;
+  }
+  .side-menu {
+    margin-bottom: 20px;
+    margin-right: 0;
+  }
+  .mypage-navbar {
+    margin-top: 0;
+    width: 100%;
+  }
+  .mypage-navbar ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .contents {
+    width: 100%;
+  }
+
+  .menu-contents {
+    padding: 10px;
+  }
+  .order-item .product-img {
+    width: 100px;
+    height: 100px;
+  }
+  .order-item .product-info {
+    margin: 0 5px;
+    align-self: flex-start;
+  }
+}
+
+/* 배송지 수정 모달 */
+.modal-footer {
+  justify-content: center;
+}
+
+.modal #searchAddressBtn {
+  width: 100%;
+}
+
+@media screen and (max-width: 420px) {
+  .order-item {
+    padding: 5px;
+    flex-direction: column;
+  }
+
+  .order-item .order-item-btn-container {
+    margin-top: 5px;
+    flex-direction: row;
+  }
+  .order-item .order-item-btn-container button {
+    margin: 0 3px;
+  }
+}

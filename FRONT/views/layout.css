@@ -1,0 +1,160 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+a:hover {
+  color: #000;
+}
+
+/* header */
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  padding: 10px;
+}
+
+.top-header .header-logo {
+  flex: 1;
+  font-size: 2rem;
+}
+
+.top-header .header-menu ul {
+  display: flex;
+  flex-direction: row;
+}
+
+.top-header .header-menu ul li {
+  margin: 0 15px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-top: #000 solid 1px;
+  border-bottom: #000 solid 1px;
+  height: 50px;
+}
+
+.navbar .navbar-list {
+  display: flex;
+}
+
+.navbar .navbar-list li {
+  margin: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar a:hover {
+  color: var(--bs-green);
+}
+
+.navbar .category-menu {
+  position: absolute;
+  left: 5%;
+  cursor: pointer;
+}
+
+.navbar .category-menu:hover {
+  color: var(--bs-green);
+}
+
+.navbar .category-menu p {
+  margin-left: 0.3rem;
+}
+
+.navbar .dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: var(--bs-dropdown-spacer);
+  top: 100%;
+  left: 0;
+}
+
+.dropdown-toggle {
+  display: flex;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar .category-menu {
+    position: relative;
+    left: 0;
+  }
+}
+
+/* footer */
+.footer {
+  margin-top: auto;
+  width: 100%;
+  background-color: #f2f2f2;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.footer-menu {
+  margin-bottom: 20px;
+}
+
+.footer-menu ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-menu li {
+  margin-right: 20px;
+}
+
+.footer-menu li:last-child {
+  margin-right: 0;
+}
+
+.footer-info p {
+  margin: 0;
+}
