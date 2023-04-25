@@ -21,6 +21,23 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// 아이디 중복 확인 라우터
+router.post('/check-userid', async (req, res) => {
+    try {
+        const { userId } = req.body;
+        const isDuplicated = await userService.isUserIdDuplicated(userId);
+
+        if (isDuplicated) {
+            res.status(200).json({ message: '중복된 아이디입니다.', isDuplicated: true });
+        } else {
+            res.status(200).json({ message: '사용 가능한 아이디입니다.', isDuplicated: false });
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(`${err}`);
+    }
+});
+
 // 로그인 라우터
 router.post('/login', async (req, res) => {
     try {
