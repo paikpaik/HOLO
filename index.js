@@ -11,5 +11,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`정상적으로 서버를 시작하였습니다.  http://localhost:${port}`);
 }); // 서버 실행
-
-
