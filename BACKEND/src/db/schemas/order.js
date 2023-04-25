@@ -70,3 +70,6 @@ const OrderSchema = new Schema({
         timestamps: true,
 
     });
+
+module.exports = { OrderItemSchema, OrderSchema };
+
