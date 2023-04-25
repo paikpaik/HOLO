@@ -1,5 +1,5 @@
-const express = require('express');
-const ProductService = require('../services/productService');
+const express = require("express");
+const ProductService = require("../service/productService");
 
 class ProductRouter {
   constructor() {
@@ -8,18 +8,18 @@ class ProductRouter {
   }
 
   initializeRoutes() {
-    this.router.get('/', async (req, res) => {
+    this.router.get("/", async (req, res) => {
       try {
         const products = await ProductService.getAllProducts();
-        console.log('모든 상품 조회 성공!');
+        console.log("모든 상품 조회 성공!");
         res.json(products);
       } catch (err) {
         console.error(err);
-        res.status(500).json({ message: '상품 조회 중 오류가 발생했습니다.' });
+        res.status(500).json({ message: "상품 조회 중 오류가 발생했습니다." });
       }
     });
 
-    this.router.get('/:productId', async (req, res) => {
+    this.router.get("/:productId", async (req, res) => {
       try {
         const productId = req.params.productId;
         const product = await ProductService.getProductById(productId);
@@ -27,11 +27,11 @@ class ProductRouter {
         res.json(product);
       } catch (err) {
         console.error(err);
-        res.status(500).json({ message: '상품 조회 중 오류가 발생했습니다.' });
+        res.status(500).json({ message: "상품 조회 중 오류가 발생했습니다." });
       }
     });
 
-    this.router.post('/admin/products', async (req, res) => {
+    this.router.post("/admin/products", async (req, res) => {
       try {
         const data = req.body;
         const product = await ProductService.createProduct(data);
@@ -39,11 +39,11 @@ class ProductRouter {
         res.json(product);
       } catch (err) {
         console.error(err);
-        res.status(500).json({ message: '상품 등록 중 오류가 발생했습니다.' });
+        res.status(500).json({ message: "상품 등록 중 오류가 발생했습니다." });
       }
     });
 
-    this.router.put('/:productId', async (req, res) => {
+    this.router.put("/:productId", async (req, res) => {
       try {
         const productId = req.params.productId;
         const updateData = req.body;
@@ -55,19 +55,21 @@ class ProductRouter {
         res.json(updatedProduct);
       } catch (err) {
         console.error(err);
-        res.status(500).json({ message: '상품 수정 중 오류가 발생했습니다.' });
+        res.status(500).json({ message: "상품 수정 중 오류가 발생했습니다." });
       }
     });
 
-    this.router.delete('/:productId', async (req, res) => {
+    this.router.delete("/:productId", async (req, res) => {
       try {
         const productId = req.params.productId;
-        const deletedProduct = await ProductService.deleteProductById(productId);
+        const deletedProduct = await ProductService.deleteProductById(
+          productId
+        );
         console.log(`id가 ${productId}인 상품 삭제 성공!`);
         res.json(deletedProduct);
       } catch (err) {
         console.error(err);
-        res.status(500).json({ message: '상품 삭제 중 오류가 발생했습니다.' });
+        res.status(500).json({ message: "상품 삭제 중 오류가 발생했습니다." });
       }
     });
   }
