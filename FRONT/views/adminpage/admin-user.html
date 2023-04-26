@@ -39,64 +39,16 @@
             <h3>회원 목록</h3>
           </div>
 
-          <div id="userList" class="menu-contents">
-            <table>
-              <thead>
+          <div id="userList" class="menu-contents table-responsive">
+            <table class="table table-borderless align-middle">
+              <thead class="table-success">
                 <tr>
-                  <th>아이디</th>
-                  <th>이름</th>
-                  <th>누적 구매 금액</th>
-                  <th>가입일</th>
-                  <th>관리</th>
+                  <th class="col">아이디</th>
+                  <th class="col">이름</th>
+                  <th class="col">관리</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>user1</td>
-                  <td>홍길동</td>
-                  <td>100,000원</td>
-                  <td>2022-01-01</td>
-                  <td>
-                    <button
-                      type="button"
-                      class="btn btn-outline-success"
-                      data-id="${userId}"
-                    >
-                      삭제
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>user2</td>
-                  <td>김철수</td>
-                  <td>50,000원</td>
-                  <td>2022-02-15</td>
-                  <td>
-                    <button
-                      type="button"
-                      class="btn btn-outline-success"
-                      data-id="${userId}"
-                    >
-                      삭제
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>user3</td>
-                  <td>이영희</td>
-                  <td>200,000원</td>
-                  <td>2022-03-10</td>
-                  <td>
-                    <button
-                      type="button"
-                      class="btn btn-outline-success"
-                      data-id="${userId}"
-                    >
-                      삭제
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody class="table-group-divider"></tbody>
             </table>
           </div>
         </div>

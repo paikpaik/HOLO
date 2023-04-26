@@ -1,47 +1,38 @@
-const allCheckBtn = document.querySelector(".btn-select-all");
-const allCheckBtnIcon = document.querySelector(".btn-select-all i");
-const checkBtnIcons = document.querySelectorAll(".form-check i");
-const checkBtns = document.querySelectorAll(".form-check .btn-select");
-const labels = document.querySelectorAll(".form-check label");
+import * as Api from "../api.js";
 
-const deleteButtons = document.querySelectorAll(".btn-outline-success");
+const tbodyEl = document.querySelector("tbody");
 
-function deleteUser(e) {
-  const button = e.target;
-  const id = button.getAttribute("data-id");
+getUsers();
 
-  // 사용자 정보 삭제 코드 작성
-  console.log(`삭제 버튼이 눌린 사용자 ID: ${id}`);
+async function getUsers() {
+  const usersObj = await Api.get("/api/admin/all-users");
+  renderUsers(usersObj.users);
 }
 
-deleteButtons.forEach((button) => {
-  button.addEventListener("click", deleteUser);
+function renderUsers(users) {
+  users.forEach((user) => {
+    tbodyEl.innerHTML += `
+      <tr>
+        <td>${user.userId}</td>
+        <td>${user.name}</td>
+        <td>
+          <button class="btn btn-outline-success delete-btn" data-id="${user.userId}">삭제</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+async function deleteUser(userId) {
+  const result = await Api.delete(`/api/admin/delete-user/${userId}`);
+  alert(result.message);
+  location.reload();
+}
+
+tbodyEl.addEventListener("click", (e) => {
+  if (e.target.classList.contains("delete-btn")) {
+    const isDelete = confirm("정말 삭제하시겠습니까?");
+    if (!isDelete) return;
+    deleteUser(e.target.dataset.id);
+  }
 });
-s;
-
-// 새로운 회원 추가하기
-function addUser(id, name, totalAmount, joinDate) {
-  const userList = document.querySelector("#userList tbody");
-  const row = document.createElement("tr");
-  const deleteBtn = document.createElement("button");
-
-  // data-id 속성 자동 할당
-  row.setAttribute("data-id", id);
-
-  row.innerHTML = `
-    <td>${id}</td>
-    <td>${name}</td>
-    <td>${totalAmount}</td>
-    <td>${joinDate}</td>
-    <td>
-      <button type="button" class="btn btn-outline-success">
-        삭제
-      </button>
-    </td>
-  `;
-
-  deleteBtn.addEventListener("click", deleteUser);
-
-  row.querySelector("button").appendChild(deleteBtn);
-  userList.appendChild(row);
-}
