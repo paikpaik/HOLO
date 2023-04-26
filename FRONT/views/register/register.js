@@ -11,7 +11,13 @@ const inputDetailedAddress = document.querySelector("#detailAddress");
 const inputEmail = document.querySelector("#inputEmail");
 const registerButton = document.querySelector("#registerButton");
 const termAgreement = document.querySelector("#termAgreement");
+const isLogin = sessionStorage.getItem('token');
 
+// 로그인상태면 메인으로 넘기기
+if(isLogin){
+    window.location.href = '/'
+    alert('잘못된 접근입니다');
+}
 // id 입력 안하면 중복확인 버튼 비활성화
 function disableConfirmButton() {
     const id = inputId.value;

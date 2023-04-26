@@ -4,7 +4,13 @@ const inputId = document.querySelector("#inputId");
 const inputPassword = document.querySelector("#inputPassword");
 const loginButton = document.querySelector("#loginButton");
 const registerButton = document.querySelector("#registerButton");
+const isLogin = sessionStorage.getItem('token');
 
+// 로그인상태면 메인으로 넘기기
+if(isLogin){
+    window.location.href = '/'
+    alert('잘못된 접근입니다');
+}
 // id, password 길이 확인후 button disable
 [inputId, inputPassword].forEach((element) => element.addEventListener("keyup", checkLength));
 
