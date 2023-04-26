@@ -3,25 +3,18 @@ const { Schema } = mongoose;
 
 const productInquirySchema = new Schema(
   {
-    productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
-      required: true,
-      index: true,
+    productNo: {
+      type: String,
+      required: true
     },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      type: String,
       required: true,
+      unique: true,
     },
     inquiryNum: {
       type: Number,
       required: true,
-    },
-    date: {
-      type: Date,
-      required: true,
-      default: Date.now,
     },
     answerStatus: {
       type: Boolean,

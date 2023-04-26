@@ -1,3 +1,4 @@
+// category 스키마
 const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
