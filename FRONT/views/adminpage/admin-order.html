@@ -18,8 +18,9 @@
     <link rel="stylesheet" href="../mypage/mypage.css" />
     <link rel="stylesheet" href="../layout.css" />
     <link rel="stylesheet" href="./adminpage.css" />
+
     <script src="../layout.js" type="module"></script>
-    <script src="adminpage.js" type="module" defer></script>
+    <script src="admin-order.js" type="module" defer></script>
   </head>
   <body>
     <main>
@@ -28,31 +29,37 @@
           <h3>Admin Page</h3>
           <nav class="mypage-navbar">
             <ul>
-              <li><a href="#product" class="active">상품 관리</a></li>
-              <li><a href="#user">회원 관리</a></li>
-              <li><a href="#order">주문 관리</a></li>
+              <li><a href="/adminpage/product">상품 관리</a></li>
+              <li><a href="/adminpage/user">회원 관리</a></li>
+              <li><a href="/adminpage/order" class="active">주문 관리</a></li>
             </ul>
           </nav>
         </div>
         <div class="contents">
           <div class="menu-title">
-            <h3>상품 관리</h3>
+            <h3>주문 목록</h3>
           </div>
 
           <div id="orderList" class="menu-contents">
-            <div class="btn-container row">
-              <div class="col">
-                <button class="btn-select-all">
-                  <i class="bi bi-check-circle fs-4"></i>
-                  <p>전체 선택</p>
-                </button>
-              </div>
-              <div class="col btn-management-container">
-                <button class="btn btn-light btn-product-delete">
-                  상품 삭제
-                </button>
-                <button class="btn btn-light btn-product-add">상품 등록</button>
-              </div>
+            <div id="getOrders">
+              <label for="date"
+                >기간
+                <input
+                  type="date"
+                  id="date"
+                  max="2077-06-20"
+                  min="2023-01-01"
+                  value="2023-04-29"
+                />
+                ~
+                <input
+                  type="date"
+                  id="date"
+                  max="2077-06-20"
+                  min="2023-01-01"
+                  value="2023-04-29"
+                />
+              </label>
             </div>
 
             <div class="product-container">

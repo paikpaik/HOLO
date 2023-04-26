@@ -19,7 +19,7 @@ async function handleAllCheck(e) {
   }
 
   checkBtnIcons.forEach((checkBtnIcon) => {
-    if (checkBtnIcon.className.split(" ")[1] === "bi-check-circle") {
+    if (allCheckBtnIcon.className.split(" ")[1] === "bi-check-circle-fill") {
       checkBtnIcon.className = "bi bi-check-circle-fill fs-4";
     } else {
       checkBtnIcon.className = "bi bi-check-circle fs-4";
@@ -30,7 +30,13 @@ async function handleAllCheck(e) {
 // 개별 상품 선택 버튼 클릭 이벤트
 function handleCheck(e) {
   if (e.target.checked) {
-    // 체크 상태
+    e.target.nextElementSibling.querySelector("i").className =
+      "bi bi-check-circle-fill fs-4";
   } else {
+    e.target.nextElementSibling.querySelector("i").className =
+      "bi bi-check-circle fs-4";
+  }
+  if (document.querySelectorAll(".form-check input:checked").length === 0) {
+    allCheckBtnIcon.className = "bi bi-check-circle fs-4";
   }
 }
