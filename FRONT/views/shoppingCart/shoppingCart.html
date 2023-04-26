@@ -18,6 +18,7 @@
     />
     <link rel="stylesheet" href="../layout.css" />
     <script src="../layout.js" type="module"></script>
+    <script src="./shoppingCart.js" defer></script>
   </head>
   <body>
     <script
@@ -25,39 +26,13 @@
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
-
-    <!-- <div class="container text-left" >
-      <div class="row" style="align-items: center; margin-top: 20px; ">
-        
-        <div class="col">
-          <div class="form-check" style="text-align: center;" >
-            
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" >
-            <label class="form-check-label" for="defaultCheck1">
-              전체선택
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div style="text-align: center">일반구매(0)</div>
-        </div>
-        <div class="col">
-          <div style="text-align: center">정기배송(0)</div>
-        </div>
-        <div class="col" style="text-align: center">
-          <button type="button" class="btn btn-success">삭제하기</button>
-        </div>
-      </div>
-    </div> -->
-    <!-- 수정 -->
-
     <div class="container">
-      <div class="row" style="margin: 20px 0 20px 0;">
+      <div class="row">
           <div class="box2">
             <div class="container text-left" >
               <div class="row" style="align-items: center; margin: 0px 0 10px 0;">
                 <div class="col">
-                  <div class="form-check" style="text-align: center">
+                  <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">
                       전체선택
@@ -65,12 +40,12 @@
                   </div>
                 </div>
                 <div class="col">
-                  <div style="text-align: center">일반구매(0)</div>
+                  <div>일반구매(0)</div>
                 </div>
                 <div class="col">
-                  <div style="text-align: center">정기배송(0)</div>
+                  <div>정기배송(0)</div>
                 </div>
-                <div class="col" style="text-align: center">
+                <div class="col" >
                   <button type="button" class="btn btn-success">삭제하기</button>
                 </div>
               </div>
@@ -81,14 +56,13 @@
         </div>
       </div>
     </div>
-    <!-- 수정 -->
     <div class="container">
-      <div class="row" style="margin: 20px 0 20px 0;">
+      <div class="row">
           <div class="box">
             <div class="container text-left" >
               <div class="row" style="align-items: center; margin: 20px 0 20px 0; border-bottom: 1px solid black;">
                 <div class="col">
-                  <div class="form-check" style="text-align: center">
+                  <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">
                       상품정보
@@ -96,34 +70,34 @@
                   </div>
                 </div>
                 <div class="col">
-                  <div style="text-align: center">수량</div>
+                  <div>수량</div>
                 </div>
                 <div class="col">
-                  <div style="text-align: center">상품금액</div>
+                  <div>상품금액</div>
                 </div>
                 <div class="col">
-                  <div style="text-align: center">배송비</div>
+                  <div>배송비</div>
                 </div>
               </div>
             </div>
             <div class="container text-left" >
-              <div class="row" style="align-items: center; margin: 20px 0 20px 0;">
+              <div class="row" >
                 <div class="col">
-                  <div class="form-check" style="text-align: center">
+                  <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">
-                      맛있는고기 돈가스용안심
+                      <p class="cart-item">맛있는고기 돈가스용안심</p>
                     </label>
                   </div>
                 </div>
                 <div class="col">
-                  <div style="text-align: center">1</div>
+                  <p class="amount">1</p>
                 </div>
                 <div class="col">
-                  <div style="text-align: center">25,000원</div>
+                  <p class="product-price">25,000원</p>
                 </div>
                 <div class="col">
-                  <div style="text-align: center">3,000원</div>
+                  <div>3,000원</div>
                 </div>
               </div>
             </div>
@@ -131,14 +105,10 @@
         </div>
       </div>
     </div>
-
-    
-
-
-    <div class="container text-left" style="margin-bottom: 20px;">
-      <div class="row" style="align-items: center">
+    <div class="container text-left">
+      <div class="row">
         <div class="col">
-          <div style="text-align: right">총 금액</div>
+          <div class="amount">총 금액</div>
         </div>
         <div class="col">
           <div>000원</div>
@@ -147,8 +117,8 @@
           <div></div>
         </div>
         <div class="col">
-          <div class="d-grid gap-2" style="text-align: left">
-            <button class="btn btn-primary" type="button">구매하기</button>
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary purchase-btn" type="button">구매하기</button>
           </div>
         </div>
       </div>
