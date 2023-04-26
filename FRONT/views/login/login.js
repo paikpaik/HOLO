@@ -28,9 +28,10 @@ async function handleLogin(e) {
     try {
         const result = await Api.post("/api/users/login", data);
         const token = result.token;
+        const userName = result.user.name
 
         sessionStorage.setItem("token", token);
-        alert(`${userId}님, 어서오세요!`);
+        alert(`${userName}님, 어서오세요!`);
         window.location.href = "/";
     }catch(err){
         alert(err.message);
