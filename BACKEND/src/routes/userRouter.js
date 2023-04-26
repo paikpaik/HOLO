@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
         // 문제 발생시 오류 전송
     } catch (err) {
         console.log(err);
-        res.status(400).send(`${err}`);
+        res.status(400).json({ message: err.message }); // JSON 형식으로 에러 메시지 반환
     }
 });
 
@@ -34,7 +34,7 @@ router.post('/check-userid', async (req, res) => {
         }
     } catch (err) {
         console.log(err);
-        res.status(400).send(`${err}`);
+        res.status(400).json({ message: err.message }); // JSON 형식으로 에러 메시지 반환
     }
 });
 
@@ -82,7 +82,7 @@ router.post('/check-password', loginRequired, async (req, res) => {
         }
     } catch (err) {
         console.log(err);
-        res.status(400).send(`${err}`);
+        res.status(400).json({ message: err.message }); // JSON 형식으로 에러 메시지 반환
     }
 });
 
@@ -93,7 +93,7 @@ router.patch('/update-user-info', loginRequired, async (req, res) => {
         res.json(updatedUser);
     } catch (err) {
         console.log(err);
-        res.status(400).send(`${err}`);
+        res.status(400).json({ message: err.message }); // JSON 형식으로 에러 메시지 반환
     }
 });
 
@@ -104,7 +104,7 @@ router.delete('/delete-user-info', loginRequired, async (req, res) => {
         res.json({ message: '회원 탈퇴가 완료되었습니다.' });
     } catch (err) {
         console.log(err);
-        res.status(400).send(`${err}`);
+        res.status(400).json({ message: err.message }); // JSON 형식으로 에러 메시지 반환
     }
 });
 

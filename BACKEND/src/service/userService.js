@@ -143,8 +143,12 @@ class UserService {
     // 사용자 ID와 업데이트할 데이터를 받아와 정보 수정
     async updateUser(userId, updateData) {
 
-        // 입력된 비밀번호가 있는 경우 해시 처리
+        // 입력된 비밀번호가 있는 경우 유효성 검사 후 해시 처리
         if (updateData.password) {
+            if (!this.#isValidPassword(updateData.password)) {
+                throw new Error('비밀번호는 최소 8자리 이상이며, 특수문자를 포함해야 합니다.');
+            }
+
             const newPasswordHash = await bcrypt.hash(updateData.password, saltRounds);
             updateData.password = newPasswordHash;
         }

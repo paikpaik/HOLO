@@ -10,7 +10,7 @@ router.get('/find-orders', loginRequired, async (req, res) => {
         res.json(orders);
     } catch (err) {
         console.log(err);
-        res.status(400).send(`${err}`);
+        res.status(400).json({ message: err.message }); // JSON 형식으로 에러 메시지 반환
     }
 });
 
@@ -22,7 +22,7 @@ router.post('/find-orders/:orderId/cancel', loginRequired, async (req, res) => {
         res.json({ message: '주문이 취소되었습니다.', order: canceledOrder });
     } catch (err) {
         console.log(err);
-        res.status(400).send(`${err}`);
+        res.status(400).json({ message: err.message }); // JSON 형식으로 에러 메시지 반환
     }
 });
 
