@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
-const productService = require("../service/productService");
-
+const productService = require('../service/productService');
+const isAdmin = require('../middlewares/isAdmin');
 // ********** 관리자 페이지 입니다. **********
 // 관리자 카테고리 추가, 됨
 router.post("/admin/category", productService.addCategory);
@@ -13,7 +13,7 @@ router.patch("/admin/category/:categoryId", productService.updateCategory);
 router.delete("/admin/category/:categoryId", productService.deleteCategory);
 
 // 관리자 상품 추가, 됨
-router.post("/admin", productService.addProduct);
+router.post('/admin', isAdmin, productService.addProduct);
 
 // 관리자 상품 수정, 됨
 router.patch("/admin/:productId", productService.updateProduct);
