@@ -1,6 +1,8 @@
 const express = require('express'); // express 불러오기
 const app = express(); // express 실행
 const userRouter = require('./routes/userRouter'); // user 라우터 불러오기
+const cartRouter = require("./routes/cartRouter"); // cart 라우터 불러오기
+const productRouter = require("./routes/productRouter"); // product 라우터 불러오기
 const orderRouter = require('./routes/orderRouter'); // order 라우터 불러오기
 const adminRouter = require('./routes/adminRouter'); // admin 라우터 불러오기
 const viewsRouter = require('./routes/viewsRouter'); // views 라우터 불러오기
@@ -23,8 +25,14 @@ app.use(cors());
 // user 라우터 사용
 app.use('/api/users', userRouter);
 
+// cart 라우터 사용
+app.use('/api/cart', cartRouter);
+
+// product 라우터 사용
+app.use('/api/products', productRouter);
+
 // order 라우터 사용
-app.use('/api/orders', orderRouter);
+app.use('/api/order', orderRouter);
 
 // admin 라우터 사용
 app.use('/api/admin', adminRouter);

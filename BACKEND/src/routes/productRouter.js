@@ -1,76 +1,75 @@
-const express = require('express');
-const ProductService = require('../service/productService');
+const { Router } = require('express');
+const router = Router();
+const productService = require('../service/productService');
 
-class ProductRouter {
-  constructor() {
-    this.router = express.Router();
-    this.initializeRoutes();
-  }
+// ********** 관리자 페이지 입니다. **********
+// 관리자 카테고리 추가, 됨
+router.post('/admin/category', productService.addCategory)
 
-  initializeRoutes() {
-    this.router.get('/', async (req, res) => {
-      try {
-        const products = await ProductService.getAllProducts();
-        console.log('모든 상품 조회 성공!');
-        res.json(products);
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: '상품 조회 중 오류가 발생했습니다.' });
-      }
-    });
+// 관리자 카테고리 수정, 됨
+router.patch('/admin/category/:categoryId', productService.updateCategory)
 
-    this.router.get('/:productId', async (req, res) => {
-      try {
-        const productId = req.params.productId;
-        const product = await ProductService.getProductById(productId);
-        console.log(`id가 ${productId}인 상품 조회 성공!`);
-        res.json(product);
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: '상품 조회 중 오류가 발생했습니다.' });
-      }
-    });
+// 관리자 카테고리 삭제, 됨
+router.delete('/admin/category/:categoryId', productService.deleteCategory)
 
-    this.router.post('/admin/products', async (req, res) => {
-      try {
-        const data = req.body;
-        const product = await ProductService.createProduct(data);
-        console.log(`상품 등록 성공!`);
-        res.json(product);
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: '상품 등록 중 오류가 발생했습니다.' });
-      }
-    });
+// 관리자 상품 추가, 됨
+router.post('/admin', productService.addProduct);
 
-    this.router.put('/:productId', async (req, res) => {
-      try {
-        const productId = req.params.productId;
-        const updateData = req.body;
-        const updatedProduct = await ProductService.updateProductById(
-          productId,
-          updateData
-        );
-        console.log(`id가 ${productId}인 상품 수정 성공!`);
-        res.json(updatedProduct);
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: '상품 수정 중 오류가 발생했습니다.' });
-      }
-    });
+// 관리자 상품 수정, 됨
+router.patch('/admin/:productId', productService.updateProduct);
 
-    this.router.delete('/:productId', async (req, res) => {
-      try {
-        const productId = req.params.productId;
-        const deletedProduct = await ProductService.deleteProductById(productId);
-        console.log(`id가 ${productId}인 상품 삭제 성공!`);
-        res.json(deletedProduct);
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: '상품 삭제 중 오류가 발생했습니다.' });
-      }
-    });
-  }
-}
+// 관리자 상품 삭제, 됨
+router.delete('/admin/:productId', productService.deleteProduct);
 
-module.exports = new ProductRouter().router;
+// ********** 사용자 관련 페이지 입니다. **********
+// 사용자 카테고리목록 조회, 됨
+router.get('/', productService.getCategoryList) 
+
+// 사용자 카테고리별 상품 조회, 됨
+// categoryId는 육류, 채소류 등등 입니다.
+router.get('/category/:categoryId', productService.getProductList)
+
+// 사용자 할인상품 조회
+router.get('/discount', productService.getDiscountedProducts)
+
+// 사용자 인기상품 조회
+router.get('/popular', productService.getPopularProducts)
+
+// 사용자 상품 상세페이지
+router.get('/:productId', productService.getProductDetail)
+
+// 상품 문의 생성
+router.post("/create-inquiries", async (req, res) => {
+  const inquiry = req.body;
+  const savedInquiry = await productInquiryService.createProductInquiry(
+    inquiry
+  );
+  res.json(savedInquiry);
+});
+
+// 상품 문의 수정
+router.patch("/edit-inquiries/:inquiryId", async (req, res) => {
+  const inquiryId = req.params.inquiryId;
+  const updatedInquiry = req.body;
+  const updated = await productInquiryService.updateProductInquiry(
+    inquiryId,
+    updatedInquiry
+  );
+  res.json(updated);
+});
+
+// 상품 문의 삭제
+router.delete("/delete-inquiries/:inquiryId", async (req, res) => {
+  const inquiryId = req.params.inquiryId;
+  const deletedInquiry = await productInquiryService.deleteProductInquiry(
+    inquiryId
+  );
+  res.status(200).json({
+    message: "문의가 삭제되었습니다.",
+    order: deletedInquiry,
+  });
+});
+
+
+
+module.exports = router;

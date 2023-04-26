@@ -8,7 +8,7 @@ async function sendEmail({ to, subject, text }) {
         port: 587, // 이메일 서비스의 포트 번호 (일반적으로 25, 587, 465, 2525 중 하나 사용)
         auth: { // 이메일 서버 인증을 위한 사용자의 이메일 주소와 비밀번호
             user: 'dukei201248@gmail.com', // 이메일 주소
-            pass: '', // 이메일 비밀번호
+            pass: 'azivrxqqvvdbwxpe', // 이메일 비밀번호
         },
     });
 
