@@ -33,14 +33,12 @@
           <img src="..." class="rounded float-start" alt="이미지" />
         </div>
         <div class="col">
-          <h2>extra</h2>
-          <h3>25,000원</h3>
-          <p>배송</p>
-          <p>판매단위</p>
+          <h2 class="product-name">extra</h2>
+          <h3 class="price">25,000원</h3>
+
           <p>수량</p>
 
           <div id="itemCount">
-            <p>맛있는 고기 돈가스용 안심</p>
             <button
               id="decrease-btn"
               type="button"
@@ -49,7 +47,7 @@
             >
               -
             </button>
-            <p id="amount">1</p>
+            <p id="quantity">1</p>
             <button
               id="increase-btn"
               type="button"
@@ -62,7 +60,7 @@
 
           <p>총 상품금액</p>
 
-          <h2>50,000원</h2>
+          <h2 class="total-price">00,000</h2>
           <button id="add-cart-item-btn" type="button" class="btn btn-success">
             장바구니 담기
           </button>
@@ -72,11 +70,8 @@
     <div class="container">
       <div class="row">
         <div id="select-menu" class="btn-group">
-          <button id="info" type="button" class="btn btn-success">
+          <button id="info" type="button" class="btn btn-secondary">
             상세정보
-          </button>
-          <button id="inquiries" type="button" class="btn btn-secondary btn-lr">
-            상품문의
           </button>
         </div>
       </div>
@@ -88,42 +83,3 @@
     </div>
   </body>
 </html>
-
-<!-- <div class="list-box">
-  <ul id="list">
-    <li>
-      <div>
-        <p class="title">게시글 제목<span class="reply-count">[4]</span></p>
-        <p class="user-info fs-12 txt-gray">작성자 | 2022-08-02 9:15:69</p>
-      </div>
-      <div>
-        <p class="content">게시글 본문 내용</p>
-      </div>
-      <div class="reply-box fs-12">
-        <div class="reply-write">
-          <input type="text" id="replyUserName" style="width: 18%;">
-          <input type="text" id="replyContent" style="width: 70%;">
-          <button id="btnAddReply" class="btn btn--gray">등록</button>
-        </div>
-        <div class="reply-list">
-          <p class="reply">[작성자] 댓글내용 | 2022-08-02 9:15:69</p>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
-<div class="write-box">
-  <div>
-    <label for="userName">작성자</label>
-    <input type="text" id="userName">
-  </div>
-  <div>
-    <label for="title">제목</label>
-    <input type="text" id="title">
-  </div>
-  <div>
-    <label for="content">내용</label>
-    <textarea id="content"></textarea>
-  </div>
-  <button id="btnAddTxt" class="btn btn--black">글쓰기</button>
-</div> -->
