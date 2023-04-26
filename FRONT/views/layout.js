@@ -1,6 +1,15 @@
+const isLogin = sessionStorage.getItem('token');
+let page;
+let loginOut;
+if(isLogin){
+  page = '<li><a href="/mypage">마이페이지</a></li>';
+  loginOut = '<li><a href="/logout">로그아웃</a></li>';
+} else{
+  page = '<li><a href="/register">회원가입</a></li>';
+  loginOut = '<li><a href="/login">로그인</a></li>';
+}
 insertHeader();
 insertFooter();
-
 function insertHeader() {
   const header = `
     <header class="header">
@@ -11,8 +20,8 @@ function insertHeader() {
         <div class="header-menu">
           <ul>
             <li><a href="#">장바구니</a></li>
-            <li><a href="/mypage">마이페이지</a></li>
-            <li><a href="/logout">로그아웃</a></li>
+            ${page}
+            ${loginOut}
           </ul>
         </div>
       </div>
