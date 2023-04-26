@@ -16,6 +16,7 @@ viewsRouter.use("/adminpage", serveStatic("adminpage"));
 viewsRouter.use("/product", serveStatic("product"));
 viewsRouter.use("/productList", serveStatic("productList"));
 viewsRouter.use("/shoppingCart", serveStatic("shoppingCart"));
+viewsRouter.use("/logout", serveStatic("logout"));
 
 // views 폴더의 최상단 파일 (사진, favicon 등) 라우팅
 viewsRouter.use("/", serveStatic(""));

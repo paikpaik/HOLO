@@ -6,13 +6,13 @@ function insertHeader() {
     <header class="header">
       <div class="top-header">
         <div class="header-logo">
-          <a href="#home">HOLO</a>
+          <a href="/">HOLO</a>
         </div>
         <div class="header-menu">
           <ul>
             <li><a href="#">장바구니</a></li>
-            <li><a href="#mypage">마이페이지</a></li>
-            <li><a href="#logout">로그아웃</a></li>
+            <li><a href="/mypage">마이페이지</a></li>
+            <li><a href="/logout">로그아웃</a></li>
           </ul>
         </div>
       </div>
