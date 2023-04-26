@@ -1,13 +1,13 @@
-const express = require('express'); // express 불러오기
+const express = require("express"); // express 불러오기
 const app = express(); // express 실행
-const userRouter = require('./routes/userRouter'); // user 라우터 불러오기
-const orderRouter = require('./routes/orderRouter'); // order 라우터 불러오기
-const adminRouter = require('./routes/adminRouter'); // admin 라우터 불러오기
-const viewsRouter = require('./routes/viewsRouter'); // views 라우터 불러오기
-const cookieParser = require('cookie-parser'); // 쿠키 파서 불러
-const cors = require('cors'); // CORS 미들웨어 불러오기
-const errorHandler = require('./middlewares/error-handler'); // 에러 핸들러 불러오기
-
+const userRouter = require("./routes/userRouter"); // user 라우터 불러오기
+const orderRouter = require("./routes/orderRouter"); // order 라우터 불러오기
+const adminRouter = require("./routes/adminRouter"); // admin 라우터 불러오기
+const viewsRouter = require("./routes/viewsRouter"); // views 라우터 불러오기
+const cookieParser = require("cookie-parser"); // 쿠키 파서 불러
+const cors = require("cors"); // CORS 미들웨어 불러오기
+const errorHandler = require("./middlewares/error-handler"); // 에러 핸들러 불러오기
+const productRouter = require("./routes/productRouter");
 // JSON 형식의 데이터를 파싱하기 위한 미들웨어
 app.use(express.json());
 
@@ -21,16 +21,18 @@ app.use(cookieParser());
 app.use(cors());
 
 // user 라우터 사용
-app.use('/api/users', userRouter);
+app.use("/api/users", userRouter);
 
 // order 라우터 사용
-app.use('/api/orders', orderRouter);
+app.use("/api/orders", orderRouter);
 
 // admin 라우터 사용
-app.use('/api/admin', adminRouter);
+app.use("/api/admin", adminRouter);
+
+app.use("/api/product", productRouter);
 
 // views 라우터 사용
-app.use('/', viewsRouter);
+app.use("/", viewsRouter);
 
 // 에러 핸들러 사용
 app.use(errorHandler);
