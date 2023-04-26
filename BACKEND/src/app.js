@@ -24,7 +24,7 @@ app.use(cors());
 app.use('/api/users', userRouter);
 
 // order 라우터 사용
-app.use('/api/orders', orderRouter);
+app.use('/api/order', orderRouter);
 
 // admin 라우터 사용
 app.use('/api/admin', adminRouter);
