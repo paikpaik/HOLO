@@ -1,7 +1,7 @@
 const userModel = require('../db/models/userModel'); // user 모델 불러오기
 const bcrypt = require('bcrypt'); // 비밀번호 해쉬화를 위한 bcrypt 불러오기
 const jwt = require('jsonwebtoken'); // jwt 토큰 사용을 위해 모듈 불러오기
-const generateToken = require('../utils/jwt'); // jwt 토큰 생성 파일 불러오기
+const { generateToken } = require('../utils/jwt'); // jwt 토큰 생성 파일 불러오기
 
 const saltRounds = 10; // bcrypt에서 사용되는 솔트 라운드 값 설정. 값이 클수록 보안성이 높지만, 처리 속도가 오래걸림.
 

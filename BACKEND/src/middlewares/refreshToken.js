@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken'); // jwt 모듈 불러오기
+const { refreshToken } = require('../utils/jwt');
 
 // JWT 토큰을 새로 고치는 미들웨어 함수
 const refreshJwtMiddleware = (req, res, next) => {
