@@ -1,17 +1,39 @@
+import * as Api from "./api.js";
+
 const isLogin = sessionStorage.getItem('token');
 let page;
 let loginOut;
-if(isLogin){
-  page = '<li><a href="/mypage">마이페이지</a></li>';
-  loginOut = '<li><a href="/logout">로그아웃</a></li>';
-} else{
-  page = '<li><a href="/register">회원가입</a></li>';
-  loginOut = '<li><a href="/login">로그인</a></li>';
+if (isLogin) {
+    page = '<li><a href="/mypage">마이페이지</a></li>';
+    loginOut = '<li><a href="/" class="logout">로그아웃</a></li>';
+} else {
+    page = '<li><a href="/register">회원가입</a></li>';
+    loginOut = '<li><a href="/login">로그인</a></li>';
 }
 insertHeader();
 insertFooter();
+initEventListeners();
+
+async function handleLogout() {
+    try {
+        const result = await Api.post('/api/users/logout');
+        sessionStorage.removeItem("token");
+        alert(result.message);
+    } catch (err) {
+        alert('로그인 상태가 아닙니다');
+    }
+}
+function initEventListeners() {
+    document.querySelector(".header").addEventListener("click", async (e) => {
+        if (e.target.classList.contains('logout')){
+            e.preventDefault();
+            await handleLogout();
+            location.reload();
+        }
+    })
+}
 function insertHeader() {
-  const header = `
+    const header = `
     <header class="header">
       <div class="top-header">
         <div class="header-logo">
@@ -44,11 +66,11 @@ function insertHeader() {
       </nav>
     </header>`;
 
-  document.querySelector("body").insertAdjacentHTML("afterbegin", header);
+    document.querySelector("body").insertAdjacentHTML("afterbegin", header);
 }
 
 function insertFooter() {
-  const footer = `
+    const footer = `
     <footer class="footer">
       <div class="footer-menu">
         <ul>
@@ -65,5 +87,5 @@ function insertFooter() {
       </div>
     </footer>`;
 
-  document.querySelector("body").insertAdjacentHTML("beforeend", footer);
+    document.querySelector("body").insertAdjacentHTML("beforeend", footer);
 }
