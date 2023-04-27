@@ -71,11 +71,12 @@ const productService = {
         discountRate,
         shortDesc,
         longDesc,
-        imageUrl,
         purchaseNum,
         stock,
         originLabel,
       } = req.body;
+      const imagePaths = req.files.map((file) => file.path);
+
       const createInfo = {
         productNo,
         productName,
@@ -84,7 +85,7 @@ const productService = {
         discountRate,
         shortDesc,
         longDesc,
-        imageUrl,
+        imagePaths,
         purchaseNum,
         stock,
         originLabel,
@@ -114,7 +115,6 @@ const productService = {
         discountRate,
         shortDesc,
         longDesc,
-        imageUrl,
         purchaseNum,
         stock,
         originLabel,
@@ -127,7 +127,6 @@ const productService = {
         discountRate,
         shortDesc,
         longDesc,
-        imageUrl,
         purchaseNum,
         stock,
         originLabel,
@@ -150,7 +149,27 @@ const productService = {
         createInfo,
         { new: true }
       );
-      res.status(200).json({ message: "상품 수정 성공", data: updatedProduct });
+
+      // 이미지 업로드
+      const imagePaths = [];
+      if (req.files && req.files.length > 0) {
+        for (const file of req.files) {
+          const imagePath = file.path.replace(/\\/g, "/");
+          imagePaths.push(imagePath);
+        }
+      }
+      // 기존 이미지와 새로운 이미지 합치기
+      const allImagePaths = updatedProduct.imagePaths.concat(imagePaths);
+      // 이미지 정보 업데이트
+      const updatedProductWithImages = await Product.findByIdAndUpdate(
+        productId,
+        { imagePaths: allImagePaths },
+        { new: true }
+      );
+
+      res
+        .status(200)
+        .json({ message: "상품 수정 성공", data: updatedProductWithImages });
     } catch (error) {
       errorHandler(error, req, res, next);
     }

@@ -1,9 +1,10 @@
-const orderModel = require('../db/models/orderModel'); // order 모델 불러오기
-const userModel = require('../db/models/userModel'); // user 모델 불러오기
+const orderModel = require("../db/models/orderModel"); // order 모델 불러오기
+const userModel = require("../db/models/userModel"); // user 모델 불러오기
+const productModel = require("../db/models/productModel"); // product 모델 불러오기
 const loginRequired = require("../middlewares/login-required");
 
 class OrderService {
-    // 주문생성 (테스트완료)
+  // 주문생성 (테스트완료)
   async createOrder(req, res) {
     const {
       userId,
@@ -11,6 +12,7 @@ class OrderService {
       cartId,
       orderItems = [],
       shippingAddress,
+      shippingMemo,
       status,
     } = req;
     console.log(req);
@@ -18,25 +20,46 @@ class OrderService {
     // totalPrice, totalDiscount 계산
     let totalPrice = 0;
     let totalDiscount = 0;
-    orderItems.forEach((item) => {
-      totalPrice += item.price;
-      totalDiscount += item.price * (item.discountRate / 100);
-    });
+    let isStockAvailable = true; // 상품 재고 확인용 변수
+    for (const item of orderItems) {
+      const product = await productModel.getProductById(item.productId);
+      if (!product || product.stock < item.quantity) {
+        // 상품이 없거나 재고가 충분하지 않은 경우
+        isStockAvailable = false;
+        break;
+      }
+      totalPrice += item.price * item.quantity;
+      totalDiscount += item.price * (item.discountRate / 100 || 0);
+    }
 
     // 주문 정보 객체 생성
-    const newOrder = await orderModel.createOrder({
-      userId,
-      email,
-      cartId,
-      orderItems,
-      shippingAddress,
-      totalPrice,
-      totalDiscount,
-      status: "pending",
-    });
+    let newStatus = status;
+    if (isStockAvailable) {
+      const newOrder = await orderModel.createOrder({
+        userId,
+        email,
+        cartId,
+        orderItems,
+        shippingAddress,
+        shippingMemo,
+        totalPrice,
+        totalDiscount,
+        status: newStatus || "pending",
+      });
+      // 상품 재고 감소
+      for (const item of orderItems) {
+        await productModel.updateProductStock(item.productId, -item.quantity);
+      }
+      // DB에 주문 정보 저장
+      return newOrder;
+    } else {
+      throw new Error("상품 재고가 부족합니다.");
+    }
+  }
 
-    // DB에 주문 정보 저장
-    return newOrder;
+  // 주문상태변경
+  async updateOrderStatus(orderId, status) {
+    await orderModel.updateOrderStatus(orderId, status);
   }
   // 비회원 주문조회 (테스트 완료)
   async getOrder(orderId, email) {
@@ -79,7 +102,7 @@ class OrderService {
   async updateUserOrder(req, res) {
     const { orderId, updateInfo } = req.body;
     const currentUserId = req.currentUserId;
-    console.log('orderService' + updateInfo);
+    console.log("orderService" + updateInfo);
     // 주문 정보 조회
     const order = await orderModel.findOne({ _id: orderId }).lean();
 
@@ -154,48 +177,45 @@ class OrderService {
     throw new Error("일치하는 주문이 없습니다.");
   }
 
+  // 사용자ID를 이용해 주문 정보 조회
+  async getOrdersByUserId(userId) {
+    const orders = await orderModel.find({ userId });
+    if (!orders) {
+      throw new Error("주문 내역이 없습니다.");
+    }
+    return orders;
+  }
 
+  // 주문 취소 로직 구현
+  async cancelOrder(orderId, userId) {
+    // 사용자ID와 주문 번호를 이용해 주문 찾기
+    const order = await orderModel.findOne({ _id: orderId, userId });
+    const orderObj = order.toObject();
 
-    // 사용자ID를 이용해 주문 정보 조회
-    async getOrdersByUserId(userId) {
-        const orders = await orderModel.find({ userId });
-        if (!orders) {
-            throw new Error('주문 내역이 없습니다.')
-        }
-        return orders;
-    };
+    // 해당 주문이 없을 경우 에러 메세지 전송
+    if (!order) {
+      throw new Error("주문을 찾을 수 없습니다.");
+    }
 
-    // 주문 취소 로직 구현
-    async cancelOrder(orderId, userId) {
-        // 사용자ID와 주문 번호를 이용해 주문 찾기
-        const order = await orderModel.findOne({ _id: orderId, userId });
-        const orderObj = order.toObject();
+    // 주문 상태가 'pending' or 'processing'이 아닐 경우 취소 불가 메세지 전송
+    if (orderObj.status !== "pending" && orderObj.status !== "processing") {
+      throw new Error("이미 배송중인 주문으로 취소할 수 없습니다.");
+    }
 
-        // 해당 주문이 없을 경우 에러 메세지 전송
-        if (!order) {
-            throw new Error("주문을 찾을 수 없습니다.");
-        }
+    // 주문 상태 'canceled'로 변경 후 db 저장
+    await orderModel.updateOne(
+      { _id: orderId },
+      {
+        $set: { status: "canceled" },
+      }
+    );
 
-        // 주문 상태가 'pending' or 'processing'이 아닐 경우 취소 불가 메세지 전송
-        if (orderObj.status !== "pending" && orderObj.status !== "processing") {
-            throw new Error("이미 배송중인 주문으로 취소할 수 없습니다.");
-        }
+    // 변경된 주문 데이터를 반환
+    const updatedOrder = await orderModel.findOne({ _id: orderId, userId });
 
-        // 주문 상태 'canceled'로 변경 후 db 저장
-        await orderModel.updateOne(
-            { _id: orderId },
-            {
-                $set: { status: "canceled" },
-            }
-        );
-
-
-        // 변경된 주문 데이터를 반환
-        const updatedOrder = await orderModel.findOne({ _id: orderId, userId });
-
-        return updatedOrder;
-    };
-};
+    return updatedOrder;
+  }
+}
 
 const orderService = new OrderService();
 
