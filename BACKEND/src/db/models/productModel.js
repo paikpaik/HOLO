@@ -37,8 +37,8 @@ class ProductModel {
     }
 
     // 카테고리에 따른 상품 조회
-    async findByCategory(category) {
-        const products = await Product.find({ category: category });
+    async findByCategory(categoryId) {
+        const products = await Product.find({ categoryId });
         return products;
     }
 
