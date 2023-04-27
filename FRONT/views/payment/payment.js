@@ -19,7 +19,7 @@ async function getData() {
     try {
         return await Api.get('/api/users/user-info');
     } catch (err) {
-        alert(err.message);
+        console.log(err.message);
     }
 }
 // 로그인시에는 구매자 정보 띄워줌
