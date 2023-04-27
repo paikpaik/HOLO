@@ -82,10 +82,18 @@ class OrderService {
     }
 
     // 디비에서 가져온 가격으로 계산된 totalPrice
-    const dbTotalPrice = await calculateTotalPriceFromDB(orderItems);
+    const dbTotalPrice = await calculateTotalPrice(orderItems);
 
     if (totalPrice !== dbTotalPrice) {
       throw new Error("주문 가격이 일치하지 않습니다.");
+    }
+
+    function calculateTotalPrice(orderItems) {
+      let totalPrice = 0;
+      for (const item of orderItems) {
+        totalPrice += item.price * item.quantity;
+      }
+      return totalPrice;
     }
 
     // 주문 정보 객체 생성

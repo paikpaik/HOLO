@@ -214,10 +214,56 @@ img#logo {
 
 /* order-completed */
 
-.card.col-md-3.col-6.pt-2 {
+
+.d-inline-block.border {
   border:none !important;  
 }
 
+.d-flex.flex-column.align-items-center.text-center {
+  box-sizing: content-box !important;
+}
 
+.col-4 {
+  width: 50%;
+}
 
+.py-3 {
+  padding-top: 2.5rem!important;
+}
 
+.my-3 {
+  margin-bottom: 3.5rem!important;
+}
+
+.css-qaxuc4 {
+  display: block;
+  padding: 0px 10px;
+  text-align: center;
+  overflow: hidden;
+  width: 100%;
+  height: 43px;
+  border-radius: 3px;
+  font-weight: 400;
+  color: rgb(255, 255, 255);
+  background-color: #263A29;
+  border: 0px none;
+}
+
+.css-hxorrg {
+  display: block;
+  padding: 0px 10px;
+  text-align: center;
+  overflow: hidden;
+  width: 100%;
+  height: 43px;
+  border-radius: 3px;
+  font-weight: 500;
+  color: #263A29;
+  background-color: #F1EFE7;
+  border: 1px solid #263A29;
+}
+
+.fs-3 {
+    font-weight: 600;
+    font-size: 1.35rem!important;
+}
