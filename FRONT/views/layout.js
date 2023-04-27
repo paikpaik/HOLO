@@ -37,7 +37,7 @@ function insertHeader() {
     <header class="container header">
       <div class="top-header">
         <div class="header-logo">
-          <img src="/images/holo_logo(1).png" href="/" alt="HOLO" width="120px" id="logo">
+        <a href="/"><img src="/images/holo_logo(1).png" href="/" alt="HOLO" width="120px" id="logo"></a>
         </div>
         <div class="header-menu">
           <ul>
@@ -49,19 +49,11 @@ function insertHeader() {
       </div>
       <nav class="navbar">
         <ul class="navbar-list">
-          <li class="category-menu dropdown" >
-            <div class="dropdown-toggle" id="dropdownMenu" aria-expanded="false">
-              <i class="bi bi-list"></i>
-              <p>카테고리</p> 
-            </div>  
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-              <li><a class="dropdown-item" href="#">카테고리1</a></li>
-              <li><a class="dropdown-item" href="#">카테고리2</a></li>
-              <li><a class="dropdown-item" href="#">카테고리3</a></li>  
-            </ul>
-          </li>
-          <li><a href="#best" id="best">인기 상품</a></li>
-          <li><a href="#discount" id="discount">할인 상품</a></li>
+          <li><a class="dropdown-item" href="#">채소·과일</a></li>
+          <li><a class="dropdown-item" href="#">정육·계란</a></li>
+          <li><a class="dropdown-item" href="#">수산</a></li> 
+          <li><a class="dropdown-item" href="#best">샐러드·간편식</a></li>
+          <li><a class="dropdown-item" href="#discount">음료</a></li>
         </ul>
       </nav>
     </header>`;

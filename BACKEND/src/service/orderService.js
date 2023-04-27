@@ -5,7 +5,57 @@ const loginRequired = require("../middlewares/login-required");
 
 class OrderService {
   // 주문생성 (테스트완료)
-  async createOrder(req, res) {
+  // async createOrder(req, res) {
+  //   const {
+  //     userId,
+  //     email,
+  //     orderItems = [],
+  //     shippingAddress,
+  //     shippingMemo,
+  //     status,
+  //   } = req;
+  //   console.log(req);
+
+  //   // totalPrice, totalDiscount 계산
+  //   let totalPrice = 0;
+  //   let totalDiscount = 0;
+  //   let isStockAvailable = true; // 상품 재고 확인용 변수
+  //   for (const item of orderItems) {
+  //     const product = await productModel.getProductById(item.productId);
+  //     if (!product || product.stock < item.quantity) {
+  //       // 상품이 없거나 재고가 충분하지 않은 경우
+  //       isStockAvailable = false;
+  //       break;
+  //     }
+  //     totalPrice += item.price * item.quantity;
+  //     totalDiscount += item.price * (item.discountRate / 100 || 0);
+  //   }
+
+  //   // 주문 정보 객체 생성
+  //   let newStatus = status;
+  //   if (isStockAvailable) {
+  //     const newOrder = await orderModel.createOrder({
+  //       userId,
+  //       email,
+  //       orderItems,
+  //       shippingAddress,
+  //       shippingMemo,
+  //       totalPrice,
+  //       totalDiscount,
+  //       status: newStatus || "pending",
+  //     });
+  //     // 상품 재고 감소 & 구매수 증가
+  //     for (const item of orderItems) {
+  //       await productModel.updateProductStock(item.productId, -item.quantity);
+  //       await productModel.updatePurchaseNum(item.productId, item.quantity);
+  //     }
+  //     // DB에 주문 정보 저장
+  //     return newOrder;
+  //   } else {
+  //     throw new Error("상품 재고가 부족합니다.");
+  //   }
+  // }
+  async createOrder(req) {
     const {
       userId,
       email,
@@ -29,6 +79,13 @@ class OrderService {
       }
       totalPrice += item.price * item.quantity;
       totalDiscount += item.price * (item.discountRate / 100 || 0);
+    }
+
+    // 디비에서 가져온 가격으로 계산된 totalPrice
+    const dbTotalPrice = await calculateTotalPriceFromDB(orderItems);
+
+    if (totalPrice !== dbTotalPrice) {
+      throw new Error("주문 가격이 일치하지 않습니다.");
     }
 
     // 주문 정보 객체 생성
