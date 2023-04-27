@@ -1,27 +1,19 @@
 import * as Api from "../api.js";
 
-// const userName = document.querySelector("#name");
-// const userEmail = document.querySelector("#email");
-// const userPhoneNumber = document.querySelector("#phoneNumber");
-// const userAddress = document.querySelector("#userAddress");
 const infoBtn = document.querySelector("#infoBtn");
 const receiverName = document.querySelector("#receiverName");
 const receiverEmail = document.querySelector("#receiverEmail");
 const receiverPhoneNumber = document.querySelector("#receiverPhoneNumber");
 const userAddress = document.querySelector("#address");
+const detailAddress = document.querySelector("#detailAddress");
 const receiverRequirement = document.querySelector("#receiverRequirement");
 const paymentBtn = document.querySelector("#paymentBtn");
 const isLogin = sessionStorage.getItem('token');
 
+const {orderItems, totalPrice, totalDiscount} = getOrderData();
+setData(totalPrice, totalDiscount);
 paymentBtn.addEventListener("click", handlePayment);
-// user-info에서 get 받아오기
-async function getData() {
-    try {
-        return await Api.get('/api/users/user-info');
-    } catch (err) {
-        console.log(err.message);
-    }
-}
+
 // 로그인시에는 구매자 정보 띄워줌
 if (isLogin) {
     const {name, email, phoneNumber, address} = await getData();
@@ -58,9 +50,59 @@ if (isLogin) {
 } else {
     infoBtn.style.display = 'none';
 }
-async function handlePayment(e){
+
+// user-info에서 get 받아오기
+async function getData() {
+    try {
+        return await Api.get('/api/users/user-info');
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+// 상품정보 가져오기
+function getOrderData() {
+    const url = new URL(window.location.href);
+    const orderItems = JSON.parse(url.searchParams.get('order'));
+    const {totalPrice, totalDiscount} = orderItems.reduce(({totalPrice, totalDiscount}, {
+        quantity,
+        price,
+        discountRate
+    }) => {
+        totalPrice = price * quantity;
+        totalDiscount = price * discountRate / 100 * quantity;
+        return {totalPrice, totalDiscount};
+    }, {totalPrice: 0, totalDiscount: 0})
+    return {orderItems, totalPrice, totalDiscount};
+}
+
+// 상품정보 띄우기
+function setData(totalPrice, totalDiscount) {
+    document.querySelector("#totalPrice").innerText = `${totalPrice} 원`;
+    document.querySelector("#totalDiscount").innerText = `-${totalDiscount} 원`;
+    document.querySelector("#totalDiscountPrice").innerText = `${totalPrice - totalDiscount} 원`;
+}
+
+// 결제완료 페이지로 보내기
+async function handlePayment(e) {
     e.preventDefault();
-    // const userId =
-    const data = {};
-    const result = await Api.post("/api/order/create-order", data);
+    const userId = receiverName.value;
+    const email = receiverEmail.value;
+    const shippingAddress = userAddress.value + detailAddress.value;
+    const shippingMemo = receiverRequirement.value;
+    const data = {
+        userId,
+        email,
+        orderItems,
+        shippingAddress,
+        shippingMemo,
+        totalPrice,
+        totalDiscount,
+    };
+    console.log(data);
+    try {
+        await Api.post("/api/order/create-order", data);
+    } catch (err) {
+        alert(err.message);
+    }
 }
