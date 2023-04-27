@@ -1,0 +1,48 @@
+import * as Api from '../api.js';
+
+// 1. 주문정보 가져오기
+// 2. 상품 요소 만들기
+// 3. 결제금액 연결
+getOrderData();
+
+async function getOrderData() {
+    const url = new URL(window.location.href);
+    const {_id, email} = JSON.parse(url.searchParams.get('orderId'));
+    try {
+        const { order } = await Api.get(`/api/order/find-orders/${_id}/${email}`);
+        const { orderItems, totalPrice, totalDiscount } = order;
+        console.log(orderItems);
+        document.querySelector("#totalPrice").innerText = `${totalPrice - totalDiscount} 원`
+        for(let i = 0; i < orderItems.length; i++){
+            if(i > 2){
+                break;
+            }
+            const orderItem = orderItems[i];
+            console.log(orderItem.productId);
+            const { productName, price, discountRate } = await findProduct(orderItem.productId);
+            const itemContent = `<div class="row border border-dark my-2">
+                <div class="col-3 my-2">
+                    <img src=".." alt="..">
+                </div>
+                <div class="col-9">
+                    <div class="fs-4 my-2">${productName}</div>
+                    <div class="mb-5 fs-5">${price * (100 - discountRate) / 100}원 / ${orderItem.quantity}개</div>
+                    <div class="d-flex my-2">
+                        <div class="ms-auto me-3">총 ${price * (100 - discountRate) / 100 * orderItem.quantity}원</div>
+                    </div>
+                </div>
+            </div>`
+            document.querySelector("#orderList").insertAdjacentHTML("afterend", itemContent);
+        }
+
+    } catch(err) {
+        console.log(err.message);
+    }
+}
+async function findProduct(productId){
+    try{
+        return await Api.get(`/api/products/${productId}`);
+    } catch(err) {
+        console.log(err.message);
+    }
+}

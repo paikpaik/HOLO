@@ -59,7 +59,6 @@ async function getData() {
         console.log(err.message);
     }
 }
-
 // 상품정보 가져오기
 function getOrderData() {
     const url = new URL(window.location.href);
@@ -101,10 +100,13 @@ async function handlePayment(e) {
         totalPrice,
         totalDiscount,
     };
-    console.log(data);
     try {
-        await Api.post("/api/order/create-order", data);
+        const { order } = await Api.post("/api/order/create-order", data);
+        const { _id } = order;
+        const orderId = JSON.stringify({_id : _id, email: email});
+        window.location.href = `/order-completed?orderId=${orderId}`;
     } catch (err) {
+        console.log(`err: ${err}`);
         console.log(err.message);
     }
 }

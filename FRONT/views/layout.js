@@ -21,6 +21,7 @@ async function handleLogout() {
     alert(result.message);
   } catch (err) {
     alert("로그인 상태가 아닙니다");
+    sessionStorage.removeItem("token");
   }
 }
 function initEventListeners() {
