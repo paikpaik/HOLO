@@ -49,19 +49,12 @@ class ProductModel {
   async findByDiscountRate(rate) {
     const products = await Product.find({ discountRate: { $gte: rate } });
     return products;
-  }
-
-    // 카테고리에 따른 상품 조회
-    async findByCategory(categoryId) {
-        const products = await Product.find({ categoryId });
-        return products;
-    }
-
+  }  
 
   // 구매 수량에 따른 상품 조회
   async findByPurchaseNum(num) {
-    const products = await Product.find({ purchaseNum: { $gte: num } });
-    return products;
+      const products = await Product.find({ purchaseNum: { $gte: num } });
+      return products;
   }
 
   // 상품 정보 업데이트
@@ -97,14 +90,14 @@ class ProductModel {
     }
     await product.save();
   }
-
-  // 구매수 증가
+  
   async updatePurchaseNum(productId, quantity) {
     const product = await Product.findById(productId);
     product.purchaseNum += quantity;
     await product.save();
   }
 }
+
 
 // ProductModel 인스턴스 생성
 const productModel = new ProductModel();
