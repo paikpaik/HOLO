@@ -46,9 +46,10 @@ class OrderService {
         totalDiscount,
         status: newStatus || "pending",
       });
-      // 상품 재고 감소
+      // 상품 재고 감소 & 구매수 증가
       for (const item of orderItems) {
         await productModel.updateProductStock(item.productId, -item.quantity);
+        await productModel.updatePurchaseNum(item.productId, item.quantity);
       }
       // DB에 주문 정보 저장
       return newOrder;

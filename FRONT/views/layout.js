@@ -37,7 +37,7 @@ function insertHeader() {
     <header class="header">
       <div class="top-header">
         <div class="header-logo">
-          <img src="/images/holo_logo(1).png" href="/" alt="HOLO" width="200px">
+          <img src="/images/holo_logo(1).png" href="/" alt="HOLO" width="140px">
         </div>
         <div class="header-menu">
           <ul>
