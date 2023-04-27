@@ -6,6 +6,13 @@ const Order = mongoose.model("orders", OrderSchema);
 class OrderModel {
     // 주문 생성
     async createOrder(orderInfo) {
+        // 총 주문금액 계산 로직
+        let totalPrice = 0;
+        for (let item of orderInfo.orderItems) {
+            totalPrice += item.price * item.quantity;
+        }
+        orderInfo.totalPrice = totalPrice;
+
         const createNewOrder = await Order.create(orderInfo);
         return createNewOrder;
     };

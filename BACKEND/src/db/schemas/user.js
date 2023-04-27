@@ -33,6 +33,10 @@ const UserSchema = new Schema({
     termsAgreed: {
         type: Boolean,
         required: true,
+    },
+    createDate : {
+        type: Date,
+        default: Date.now()
     }
 });
 

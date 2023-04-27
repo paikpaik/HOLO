@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const UserSchema = require('../schemas/user');
+const orderModel = require('./orderModel');
 
 // UserSchema를 기반으로 한 User Mongoose 모델 생성
 const User = mongoose.model('users', UserSchema);
@@ -20,16 +21,19 @@ class UserModel {
     // 사용자 정보를 사용하여 새로운 사용자를 생성
     async create(userInfo) {
 
-        // 입력된 phoneNumber 값을 문자열로 변경해줍니다.
-        userInfo.phoneNumber = String(userInfo.phoneNumber);
+        // // 입력된 phoneNumber 값을 문자열로 변경해줍니다.
+        // userInfo.phoneNumber = String(userInfo.phoneNumber);
 
         const createdNewUser = await User.create(userInfo);
         return createdNewUser;
     }
 
-    // 모든 사용자 검색
+    // 모든 사용자 검색 (총 주문금액 추가)
     async findAll() {
         const users = await User.find({});
+        for (let user of users) {
+            user._doc.totalOrderAmount = await this.getTotalOrderAmountByUserId(user.userId);
+        }
         return users;
     }
 
@@ -47,6 +51,16 @@ class UserModel {
         const filter = { userId };
         const result = await User.findOneAndDelete(filter);
         return result;
+    }
+
+    // 사용자 ID를 사용하여 누적 주문금액 얻기
+    async getTotalOrderAmountByUserId(userId) {
+        const orders = await orderModel.find({ userId });
+        let totalOrderAmount = 0;
+        for (let order of orders) {
+            totalOrderAmount += order.totalPrice;
+        }
+        return totalOrderAmount;
     }
 }
 

@@ -12,7 +12,8 @@ router.get('/all-users', loginRequired, isAdmin, async (req, res) => {
 
         // 조회된 사용자 정보 반환
         res.status(200).json({ users });
-    } catch (error) {
+    } catch (err) {
+        console.error(err); // 에러 로깅
 
         // 오류 발생 시, 서버 오류 메시지 반환
         res.status(500).json({ message: '서버 오류가 발생했습니다.' });
@@ -26,8 +27,8 @@ router.delete('/delete-user/:userId', loginRequired, isAdmin, async (req, res) =
         await adminService.deleteUser(userId);
 
         res.status(200).json({ message: '회원 정보가 성공적으로 삭제되었습니다.' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 
@@ -39,10 +40,10 @@ router.get('/all-orders', loginRequired, isAdmin, async (req, res) => {
 
         // 조회된 주문 정보 반환
         res.status(200).json({ ordersWithUser });
-    } catch (error) {
+    } catch (err) {
 
         // 오류 발생 시, 서버 오류 메시지 반환
-        res.status(500).json({ message: '서버 오류가 발생했습니다.', error: error.message });
+        res.status(500).json({ message: '서버 오류가 발생했습니다.', error: err.message });
     }
 });
 
@@ -53,8 +54,8 @@ router.delete('/delete-order/:orderId', loginRequired, isAdmin, async (req, res)
         await adminService.deleteOrder(orderId);
 
         res.status(200).json({ message: '주문이 성공적으로 삭제되었습니다.' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 
@@ -71,8 +72,8 @@ router.patch('/updatedStatus/:orderId', loginRequired, isAdmin, async (req, res)
         await adminService.updateOrderStatus(orderId, status);
 
         res.status(200).json({ message: '주문 상태가 성공적으로 변경되었습니다.' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 

@@ -42,7 +42,7 @@ class UserService {
     async register(req, res) {
 
         // req에서 필요한 정보 받아옴
-        const { userId, password, email, address, phoneNumber, name, termsAgreed } = req;
+        const { userId, password, email, address, phoneNumber, name, termsAgreed, createDate } = req;
 
         // 필수 입력 항목이 누락된 경우 메세지 전송
         if (!userId || !password || !email || !name || !phoneNumber) {
@@ -86,6 +86,7 @@ class UserService {
             name,
             isAdmin: false,
             termsAgreed,
+            createDate
         });
 
         return newUser;
