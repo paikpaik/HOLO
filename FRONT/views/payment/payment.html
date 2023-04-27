@@ -19,28 +19,9 @@
 </head>
 <body>
 <div class="container text-center">
-    <form id="paymentFormWrapper" class="text-start w-75 d-inline-block">
+    <form id="paymentFormWrapper" class="text-start col-lg-9 col-12 d-inline-block">
         <h1 class="fs-4 mt-5 mb-3">주문/결제</h1>
         <main class="mb-5 px-5 py-4 border border-dark">
-            <h2 class="fs-5">구매자 정보</h2>
-            <section class="mb-3 border border-dark px-4 py-3">
-                <div class="row mb-2">
-                    <div class="col-3 fs-6">이름</div>
-                    <div class="col" id="name">userName</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-3 fs-6">이메일</div>
-                    <div class="col" id="email">userEmail</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-3 fs-6">연락처</div>
-                    <div class="col" id="phoneNumber">userPhoneNumber</div>
-                </div>
-                <div class="row">
-                    <div class="col-3 fs-6">주소</div>
-                    <div class="col" id="userAddress">userAddress</div>
-                </div>
-            </section>
             <div class="row mb-2 align-items-end">
                 <h2 class="col-auto fs-5">받는사람 정보</h2>
                 <button class="col-auto btn btn-outline-secondary" id="infoBtn">구매자 정보와 동일</button>
@@ -59,7 +40,7 @@
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <label for="receiverPhone" class="col-3">연락처</label>
+                    <label for="receiverPhoneNumber" class="col-3">연락처</label>
                     <div class="col-9">
                         <input type="text" class="col form-control" id="receiverPhoneNumber">
                     </div>
@@ -67,7 +48,7 @@
                 <div class="row mb-2">
                     <label for="address" class="col-3">배송주소</label>
                     <div class="col-6">
-                        <input type="text" id="address" class="form-control">
+                        <input type="text" id="address" disabled class="form-control" placeholder="주소찾기 버튼을 클릭해주세요">
                     </div>
                     <div class="col-3">
                         <button class="btn btn-success w-100" id="searchAddressBtn">주소찾기</button>
@@ -117,6 +98,13 @@
                     </div>
                 </div>
             </section>
+
+            <div class="row pt-3">
+                <div class="col-9"></div>
+                <div class="col-3">
+                    <button class="btn btn-success w-100" id="paymentBtn">결제하기</button>
+                </div>
+            </div>
         </main>
     </form>
 </div>
