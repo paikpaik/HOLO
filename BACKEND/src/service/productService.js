@@ -106,7 +106,6 @@ class ProductService {
         const imagePath = file.path.replace(/\\/g, "/");
         imagePaths.push(imagePath);
       }
-    }
 
         // 기존 이미지 삭제
         const existingImagePaths = updatedProduct.imagePaths;
@@ -171,3 +170,4 @@ const productService = new ProductService();
 module.exports = productService;
     
 
+module.exports = productService;

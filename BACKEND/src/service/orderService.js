@@ -9,7 +9,6 @@ class OrderService {
     const {
       userId,
       email,
-      cartId,
       orderItems = [],
       shippingAddress,
       shippingMemo,
@@ -38,7 +37,6 @@ class OrderService {
       const newOrder = await orderModel.createOrder({
         userId,
         email,
-        cartId,
         orderItems,
         shippingAddress,
         shippingMemo,

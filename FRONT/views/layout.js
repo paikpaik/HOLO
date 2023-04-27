@@ -34,10 +34,10 @@ function initEventListeners() {
 }
 function insertHeader() {
   const header = `
-    <header class="header">
+    <header class="container">
       <div class="top-header">
         <div class="header-logo">
-          <img src="/images/holo_logo(1).png" href="/" alt="HOLO" width="140px">
+          <img src="/images/holo_logo(1).png" href="/" alt="HOLO" width="120px" id="logo">
         </div>
         <div class="header-menu">
           <ul>
@@ -60,8 +60,8 @@ function insertHeader() {
               <li><a class="dropdown-item" href="#">카테고리3</a></li>  
             </ul>
           </li>
-          <li><a href="#best">인기 상품</a></li>
-          <li><a href="#discount">할인 상품</a></li>
+          <li><a href="#best" id="best">인기 상품</a></li>
+          <li><a href="#discount" id="discount">할인 상품</a></li>
         </ul>
       </nav>
     </header>`;

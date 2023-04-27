@@ -33,10 +33,6 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
-    cartId: {
-      type: String,
-      required: true,
-    },
     orderItems: [OrderItemSchema],
     shippingAddress: {
       type: String,
