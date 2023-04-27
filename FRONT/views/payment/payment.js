@@ -13,6 +13,7 @@ const isLogin = sessionStorage.getItem('token');
 const {orderItems, totalPrice, totalDiscount} = getOrderData();
 setData(totalPrice, totalDiscount);
 paymentBtn.addEventListener("click", handlePayment);
+receiverPhoneNumber.addEventListener("keyup", autoHypenPhone);
 
 // 로그인시에는 구매자 정보 띄워줌
 if (isLogin) {
@@ -108,5 +109,19 @@ async function handlePayment(e) {
     } catch (err) {
         console.log(`err: ${err}`);
         console.log(err.message);
+    }
+}
+// 자동 하이픈
+function autoHypenPhone(e) {
+    console.log('오토하이픈 동작중!');
+    let str = e.target.value;
+    str = str.replace(/[^0-9]/g, '');
+    let tmp = '';
+    if (str.length < 4) {
+        e.target.value = str;
+    } else if (str.length < 8) {
+        e.target.value = `${str.slice(0, 3)}-${str.slice(3)}`
+    } else {
+        e.target.value = `${str.slice(0, 3)}-${str.slice(3, 7)}-${str.slice(7)}`
     }
 }
