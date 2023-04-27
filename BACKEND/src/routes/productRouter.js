@@ -32,8 +32,11 @@ router.get("/", productService.getCategoryList);
 // categoryId는 육류, 채소류 등등 입니다.
 router.get("/category/:categoryId", productService.getProductList);
 
+// 혹시 합칠때
+// router.get("/discount", { ...productService.getDiscountedProducts, ...productService.getPopularProducts});
+
 // 사용자 할인상품 조회
-router.get("/discount", productService.getDiscountedProducts);
+router.get("/discount", productService.getPopularProducts);
 
 // 사용자 인기상품 조회
 router.get("/popular", productService.getPopularProducts);
