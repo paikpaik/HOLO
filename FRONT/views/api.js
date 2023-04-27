@@ -9,10 +9,10 @@ async function get(endpoint, params = "") {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     },
   });
-  console.log('요청 보냄');
+  console.log("요청 보냄");
   // 응답 코드가 4XX 계열일 때 (400, 403 등)
   if (!res.ok) {
-    console.log('error!');
+    console.log("error!");
     const errorContent = await res.json();
     console.log(errorContent);
     const { message } = errorContent;

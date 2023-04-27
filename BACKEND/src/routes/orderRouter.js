@@ -3,28 +3,38 @@ const router = Router();
 const orderService = require("../service/orderService"); // order 서비스 불러오기
 const loginRequired = require("../middlewares/login-required"); // 로그인 확인 미들웨어 불러오기 (로그인이 필요한 기능이 있을시 해당 라우터에 사용됨)
 
-//주문 생성 라우터 (기능테스트완료)
+//주문 생성 라우터 (기능테스트완료/결제완료)
 router.post("/create-order", async (req, res) => {
   const orderInfo = req.body;
   try {
     const newOrder = await orderService.createOrder(orderInfo);
 
-    // 테스트를 위한 코드
-    res.status(201).json({
-      message: "주문이 완료되었습니다",
-      order: newOrder,
-    });
+    // 'order-completed' 페이지로 리디렉션합니다.
+    res.redirect(`/order-completed?order=${JSON.stringify(newOrder)}`);
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
   }
 });
 
-// 주문 완료 라우터
-router.get("/order-completed", (req, res) => {
-  const order = req.query.order; // newOrder 객체를 쿼리 파라미터로 전달합니다.
-  res.render("order-completed", { order });
+//장바구니 생성 라우터
+router.post("/create-cart", async (req, res) => {
+  const orderInfo = req.body;
+  console.log(orderInfo);
+  try {
+    // 'payment' 페이지로 리디렉션합니다.
+    res.redirect(`/payment?order=${JSON.stringify(orderInfo)}`);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: err.message });
+  }
 });
+
+// //주문 완료 라우터
+// router.get("/order-completed", (req, res) => {
+//   const order = req.query.order; // newOrder 객체를 쿼리 파라미터로 전달합니다.
+//   res.render("/order-completed", { order });
+// });
 
 // 주문 상태 변경 라우터
 router.patch("/:orderId/status", async (req, res, next) => {
