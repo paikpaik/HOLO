@@ -49,11 +49,11 @@ function insertHeader() {
       </div>
       <nav class="navbar">
         <ul class="navbar-list">
-          <li><a class="dropdown-item" href="#">채소·과일</a></li>
-          <li><a class="dropdown-item" href="#">정육·계란</a></li>
-          <li><a class="dropdown-item" href="#">수산</a></li> 
-          <li><a class="dropdown-item" href="#best">샐러드·간편식</a></li>
-          <li><a class="dropdown-item" href="#discount">음료</a></li>
+          <li><a class="dropdown-item" href="/productList?categoryId=채소과일">채소·과일</a></li>
+          <li><a class="dropdown-item" href="/productList?categoryId=정육계란">정육·계란</a></li>
+          <li><a class="dropdown-item" href="/productList?categoryId=수산">수산</a></li> 
+          <li><a class="dropdown-item" href="/productList?categoryId=샐러드간편식">샐러드·간편식</a></li>
+          <li><a class="dropdown-item" href="/productList?categoryId=음료">음료</a></li>
         </ul>
       </nav>
     </header>`;
