@@ -1,71 +1,93 @@
-// import * as API from "/api/api.js";
+import * as Api from "../api.js";
 
 const addCartItemBtn = document.getElementById("add-cart-item-btn");
-const inquiriesBtn = document.getElementById("inquiries");
 const quantity = document.getElementById("quantity");
 const decreaseBtn = document.getElementById("decrease-btn");
 const increaseBtn = document.getElementById("increase-btn");
-const mainContent = document.querySelector(".main-content");
-const infoBtn = document.getElementById("info");
+// const mainContent = document.querySelector(".main-content");
+// const infoBtn = document.getElementById("info");
 const productName = document.querySelector(".product-name");
 const price = document.querySelector(".price");
 const totalPrice = document.querySelector(".total-price");
+const purchaseBtn = document.getElementById("purchase-btn");
+
+let cart = JSON.parse(localStorage.getItem("cart"));
 
 let productQuantity = 1;
 
+// const productId = "644a6eebedfeef88f9240690"; // example productId
+const url = new URL(window.location.href);
+const productId = url.searchParams.get("productId");
+const product = await getData();
 async function getData() {
-  const res = await fetch(`/api/products/644778974fdab6097f1927e5`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
-
-  const data = await res.json();
-  productName.innerText = data.data.productName;
-  price.innerText = data.data.price;
-  totalPrice.innerText = data.data.price;
-
-  return data;
+  try {
+    const product = await Api.get(`/api/products/${productId}`);
+    printData(product);
+    return product;
+  } catch (e) {}
 }
 
-const data = await getData();
+function printData(product) {
+  productName.innerText = product.productName;
+  price.innerText = product.price;
+  totalPrice.innerText = product.price;
+}
 
 // setStorage
-const addCartItemBtnHandler = () => {
-  if (menu) {
-    const idx = menu.findIndex(
-      (m) => m.orderItems.productName === data.data.productName
+const addCartItemBtnHandler = async () => {
+  if (cart) {
+    console.log(cart);
+    const idx = cart.findIndex(
+      (m) => m.orderItems.productName === product.productName
     );
     if (idx != -1) {
       // 이미 장바구니에 상품이 있을 때
-      menu[idx].orderItems.quantity += productQuantity;
+      cart[idx].orderItems.quantity += productQuantity;
     } else {
       // 장바구니에 없는 새로운 상품일 때
-      addNewProduct(menu);
+      addNewProduct(cart);
     }
   } else {
     // 장바구니에 아무런 상품도 없을 때
-    menu = [];
-    addNewProduct(menu);
+    cart = [];
+    addNewProduct(cart);
   }
-  window.localStorage.setItem("menu", JSON.stringify(menu));
+  window.localStorage.setItem("cart", JSON.stringify(cart));
 };
 
-const addNewProduct = (menu) => {
+const addNewProduct = (cart) => {
   let newProduct = {
     orderItems: {
-      productName: data.data.productName,
-      price: data.data.price,
+      productId: product._id,
+      productName: product.productName,
+      price: product.price,
       quantity: productQuantity,
+      discountRate: product.discountRate,
     },
   };
-  menu.push(newProduct);
+  cart.push(newProduct);
 };
 
-async function createInquiries() {
-  return await API.post("/api/products/inquiries");
-}
-
-let menu = JSON.parse(localStorage.getItem("menu"));
+const purchaseBtnHandler = async () => {
+  try {
+    const orderitems = {
+      orderItems: [
+        {
+          productId: product._id,
+          productName: product.productName,
+          price: product.price,
+          quantity: productQuantity,
+          discountRate: product.discountRate,
+        },
+      ],
+    };
+    console.log(orderitems);
+    const res = await Api.post("/api/order/create-cart", orderitems);
+    console.log(res.json());
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 // 상품 수량 조절
 const decreaseBtnHandler = () => {
@@ -88,15 +110,8 @@ const detailInfo = `
 <img src="..." class="rounded float-start" alt="이미지" />
 </div>`;
 
-// 상품 상세페이지 버튼
-const infoBtnHandler = () => {
-  mainContent.innerHTML = detailInfo;
-  infoBtn.className = "btn btn-success";
-  inquiriesBtn.className = "btn btn-secondary btn-lr";
-};
-
 addCartItemBtn.addEventListener("click", addCartItemBtnHandler);
 decreaseBtn.addEventListener("click", decreaseBtnHandler);
 increaseBtn.addEventListener("click", increaseBtnHandler);
-inquiriesBtn.addEventListener("click", inquiriesBtnHandler);
-infoBtn.addEventListener("click", infoBtnHandler);
+purchaseBtn.addEventListener("click", purchaseBtnHandler);
+// api post
