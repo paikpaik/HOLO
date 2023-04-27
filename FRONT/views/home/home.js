@@ -13,12 +13,15 @@ async function getData(apiUrl, element){
             if(i >= data.length){
                 break;
             }
-            const { imagePaths, productName, price } = data[i];
+            const { imagePaths, productName, price, _id } = data[i];
             element[i].querySelector('img').src = imagePaths[0];
             console.log(imagePaths[0]);
             element[i].querySelector('img').alt = `${productName} 사진`;
             element[i].querySelector('div > h5').innerText = productName;
-            element[i].querySelector('div > p').innerText = price;
+            element[i].querySelector('div > p').innerText = `${price}원`;
+            element[i].addEventListener("click", () => {
+                window.location.href = `/product/?productId=${_id}`;
+            })
         }
     } catch(err) {
         console.log(err.message);
