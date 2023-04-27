@@ -59,7 +59,7 @@ a:hover {
   align-items: center;
   position: relative;
   border-top: #000  1px;
-  border-bottom: #000 solid 1px;
+  border-bottom: #263A29 solid 1px;
   height: 50px;
 }
 
@@ -174,11 +174,20 @@ a#best, a#discount {
 .card-img, .card-img-top {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+    object-fit: cover;
+  
 }
 
 .card{
   background-color: transparent;
   border: none;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .text-start.fs-4 {

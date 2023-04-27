@@ -3,32 +3,49 @@ const router = Router();
 const orderService = require("../service/orderService"); // order 서비스 불러오기
 const loginRequired = require("../middlewares/login-required"); // 로그인 확인 미들웨어 불러오기 (로그인이 필요한 기능이 있을시 해당 라우터에 사용됨)
 
-//주문 생성 라우터 (기능테스트완료/결제완료)
+// 주문 생성 라우터 (기능테스트완료/결제완료)
 router.post("/create-order", async (req, res) => {
-  const orderInfo = req.body;
   try {
+    const orderInfo = req.body;
+    const totalPrice = calculateTotalPrice(orderInfo.orderItems);
+
+    if (totalPrice !== orderInfo.totalPrice) {
+      throw new Error("주문 가격이 일치하지 않습니다.");
+    }
+
     const newOrder = await orderService.createOrder(orderInfo);
 
-    // 'order-completed' 페이지로 리디렉션합니다.
-    res.redirect(`/order-completed?order=${JSON.stringify(newOrder)}`);
+    res.status(200).json({
+      message: `OK`,
+      order: newOrder,
+    });
+    console.log("오더생성 " + newOrder);
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: err.message });
   }
 });
 
-//장바구니 생성 라우터
-router.post("/create-cart", async (req, res) => {
-  const orderInfo = req.body;
-  console.log(orderInfo);
-  try {
-    // 'payment' 페이지로 리디렉션합니다.
-    res.redirect(`/payment?order=${JSON.stringify(orderInfo)}`);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
+function calculateTotalPrice(orderItems) {
+  let totalPrice = 0;
+  for (const item of orderItems) {
+    totalPrice += item.price * item.quantity;
   }
-});
+  return totalPrice;
+}
+
+// //장바구니 생성 라우터
+// router.post("/create-cart", async (req, res) => {
+//   const orderInfo = req.body;
+//   console.log(orderInfo);
+//   try {
+//     // 'payment' 페이지로 리디렉션합니다.
+//     res.redirect(`/payment?order=${JSON.stringify(orderInfo)}`);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(400).json({ message: err.message });
+//   }
+// });
 
 // //주문 완료 라우터
 // router.get("/order-completed", (req, res) => {
