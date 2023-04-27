@@ -1,6 +1,7 @@
-const { Category } = require("../db/models/categoryModel");
-const { Product } = require("../db/models/productModel");
-const errorHandler = require("../middlewares/error-handler");
+const { Category } = require('../db/models/categoryModel');
+const { Product } = require('../db/models/productModel');
+const errorHandler = require('../middlewares/error-handler')
+const fs = require('fs-extra');
 
 const productService = {
   // 관리자 카테고리 추가
@@ -61,35 +62,29 @@ const productService = {
   },
 
   // 관리자 상품 추가
-  async addProduct(req, res, next) {
-    try {
-      const {
-        productNo,
-        productName,
-        category,
-        price,
-        discountRate,
-        shortDesc,
-        longDesc,
-        purchaseNum,
-        stock,
-        originLabel,
-      } = req.body;
-      const imagePaths = req.files.map((file) => file.path);
+  async addProduct(req, res, next){
+    try{
+      const {  
+        productName, 
+        category, 
+        price, 
+        discountRate, 
+        shortDesc, 
+        longDesc,  
+        purchaseNum, 
+        stock } = req.body;
+      const imagePaths = req.files.map(file => file.path);
 
-      const createInfo = {
-        productNo,
-        productName,
-        category,
-        price,
-        discountRate,
-        shortDesc,
-        longDesc,
-        imagePaths,
-        purchaseNum,
-        stock,
-        originLabel,
-      };
+      const createInfo = {  
+        productName, 
+        category, 
+        price, 
+        discountRate, 
+        shortDesc, 
+        longDesc, 
+        imagePaths, 
+        purchaseNum, 
+        stock }
       // 상품명이 중복인지 확인
       const existingProduct = await Product.findOne({ productName });
       if (existingProduct) {
@@ -107,30 +102,24 @@ const productService = {
   async updateProduct(req, res, next) {
     try {
       const productId = req.params.productId;
-      const {
-        productNo,
-        productName,
-        category,
-        price,
-        discountRate,
-        shortDesc,
-        longDesc,
-        purchaseNum,
-        stock,
-        originLabel,
-      } = req.body;
-      const createInfo = {
-        productNo,
-        productName,
-        category,
-        price,
-        discountRate,
-        shortDesc,
-        longDesc,
-        purchaseNum,
-        stock,
-        originLabel,
-      };
+      const { 
+        productName, 
+        category, 
+        price, 
+        discountRate, 
+        shortDesc, 
+        longDesc,  
+        purchaseNum, 
+        stock } = req.body;
+      const createInfo = {  
+        productName, 
+        category, 
+        price, 
+        discountRate, 
+        shortDesc, 
+        longDesc, 
+        purchaseNum, 
+        stock };
       // 같은 상품이 존재하는지 확인
       const existingProduct = await Product.findById(productId);
       if (!existingProduct) {
@@ -158,19 +147,34 @@ const productService = {
           imagePaths.push(imagePath);
         }
       }
-      // 기존 이미지와 새로운 이미지 합치기
-      const allImagePaths = updatedProduct.imagePaths.concat(imagePaths);
-      // 이미지 정보 업데이트
-      const updatedProductWithImages = await Product.findByIdAndUpdate(
-        productId,
-        { imagePaths: allImagePaths },
-        { new: true }
-      );
+      const updatedProduct = await Product.findByIdAndUpdate(productId, createInfo, { new: true });
 
-      res
-        .status(200)
-        .json({ message: "상품 수정 성공", data: updatedProductWithImages });
-    } catch (error) {
+    // 이미지 업로드
+    const imagePaths = [];
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const imagePath = file.path.replace(/\\/g, "/");
+        imagePaths.push(imagePath);
+      }
+    }
+
+    // 기존 이미지 삭제
+    const existingImagePaths = updatedProduct.imagePaths;
+    for (const imagePath of existingImagePaths) {
+      await fs.unlink(imagePath); // 이미지 파일 삭제
+    }
+
+    // 새로운 이미지 저장
+    const allImagePaths = imagePaths;
+    // 이미지 정보 업데이트
+    const updatedProductWithImages = await Product.findByIdAndUpdate(
+      productId,
+      { imagePaths: allImagePaths },
+      { new: true }
+    );
+
+    res.status(200).json({ message: '상품 수정 성공', data: updatedProductWithImages })
+    }catch(error){
       errorHandler(error, req, res, next);
     }
   },

@@ -1,25 +1,28 @@
 const { Router } = require("express");
 const router = Router();
 const productService = require('../service/productService');
+const upload = require('../middlewares/multer');
 const isAdmin = require('../middlewares/isAdmin');
+const loginRequired = require('../middlewares/login-required');
+
 // ********** 관리자 페이지 입니다. **********
 // 관리자 카테고리 추가, 됨
-router.post("/admin/category", productService.addCategory);
+router.post('/admin/category', loginRequired, isAdmin, productService.addCategory)
 
 // 관리자 카테고리 수정, 됨
-router.patch("/admin/category/:categoryId", productService.updateCategory);
+router.patch('/admin/category/:categoryId', loginRequired, isAdmin, productService.updateCategory)
 
 // 관리자 카테고리 삭제, 됨
-router.delete("/admin/category/:categoryId", productService.deleteCategory);
+router.delete('/admin/category/:categoryId', loginRequired, isAdmin, productService.deleteCategory)
 
 // 관리자 상품 추가, 됨
-router.post('/admin', isAdmin, productService.addProduct);
+router.post('/admin', loginRequired, isAdmin, upload.array('image', 10), productService.addProduct);
 
 // 관리자 상품 수정, 됨
-router.patch("/admin/:productId", productService.updateProduct);
+router.patch('/admin/:productId', loginRequired, isAdmin, upload.array('image', 10), productService.updateProduct);
 
 // 관리자 상품 삭제, 됨
-router.delete("/admin/:productId", productService.deleteProduct);
+router.delete('/admin/:productId', loginRequired, isAdmin, productService.deleteProduct);
 
 // ********** 사용자 관련 페이지 입니다. **********
 // 사용자 카테고리목록 조회, 됨
@@ -38,36 +41,5 @@ router.get("/popular", productService.getPopularProducts);
 // 사용자 상품 상세페이지
 router.get("/:productId", productService.getProductDetail);
 
-// 상품 문의 생성
-router.post("/create-inquiries", async (req, res) => {
-  const inquiry = req.body;
-  const savedInquiry = await productInquiryService.createProductInquiry(
-    inquiry
-  );
-  res.json(savedInquiry);
-});
-
-// 상품 문의 수정
-router.patch("/edit-inquiries/:inquiryId", async (req, res) => {
-  const inquiryId = req.params.inquiryId;
-  const updatedInquiry = req.body;
-  const updated = await productInquiryService.updateProductInquiry(
-    inquiryId,
-    updatedInquiry
-  );
-  res.json(updated);
-});
-
-// 상품 문의 삭제
-router.delete("/delete-inquiries/:inquiryId", async (req, res) => {
-  const inquiryId = req.params.inquiryId;
-  const deletedInquiry = await productInquiryService.deleteProductInquiry(
-    inquiryId
-  );
-  res.status(200).json({
-    message: "문의가 삭제되었습니다.",
-    order: deletedInquiry,
-  });
-});
 
 module.exports = router;
