@@ -47,5 +47,8 @@ app.use('/', viewsRouter);
 // 에러 핸들러 사용
 app.use(errorHandler);
 
+// 프론트에서 이미지를 사용하기 위한 미들웨어함수 사용
+app.use(express.static(__dirname + '/public'));
+
 // app 객체 모듈로 내보내기
 module.exports = app;
