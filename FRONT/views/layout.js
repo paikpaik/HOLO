@@ -42,7 +42,7 @@ function insertHeader() {
         </div>
         <div class="header-menu">
           <ul>
-            <li><a href="#">장바구니</a></li>
+            <li><a href="/shoppingCart">장바구니</a></li>
             ${page}
             ${loginOut}
           </ul>
