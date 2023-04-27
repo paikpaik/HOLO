@@ -71,10 +71,9 @@ router.patch("/:orderId/status", async (req, res, next) => {
 });
 
 //주문 조회 라우터 (기능테스트완료)
-router.get("/find-orders/:orderId", async (req, res, next) => {
+router.get("/find-orders/:orderId/:email", async (req, res, next) => {
   try {
-    const { email } = req.body;
-    const { orderId } = req.params;
+    const { email, orderId } = req.params;
 
     // 주문 조회
     const findOrder = await orderService.getOrder(orderId, email);

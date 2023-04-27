@@ -212,6 +212,12 @@ img#logo {
 }
 
 
+/* order-completed */
+
+.border {
+  border:none !important;  
+}
+
 
 
 
