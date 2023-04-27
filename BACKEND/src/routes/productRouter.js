@@ -86,7 +86,7 @@ router.get("/", async (req, res) => {
 
 // 사용자 카테고리별 상품 조회, 됨
 // categoryId는 육류, 채소류 등등 입니다.
-router.get("/category/:categoryId", async (req, res) => {
+router.get("/category/:category", async (req, res) => {
   try {
       const result = await productService.getProductList(req, res);
       res.json(result);
