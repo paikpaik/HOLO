@@ -1,15 +1,26 @@
 import * as Api from "./api.js";
 
 const isLogin = sessionStorage.getItem("token");
-let page;
-let loginOut;
-if (isLogin) {
-  page = '<li><a href="/mypage">마이페이지</a></li>';
-  loginOut = '<li><a href="/" class="logout">로그아웃</a></li>';
-} else {
-  page = '<li><a href="/register">회원가입</a></li>';
-  loginOut = '<li><a href="/login">로그인</a></li>';
+const isAdmin = sessionStorage.getItem("isAdmin");
+let header1;
+let header2;
+let header3;
+function setHeader(){
+  if (isAdmin === 'true') {
+    header1 = '<li><a href="/adminpage/product">사이트관리</a></li>';
+  } else{
+    header1 = '<li><a href="/shoppingCart">장바구니</a></li>';
+  }
+  if (isLogin) {
+    header2 = '<li><a href="/mypage">마이페이지</a></li>';
+    header3 = '<li><a href="/" class="logout">로그아웃</a></li>';
+  } else{
+    header2 = '<li><a href="/">주문조회</a></li>';
+    header3 = '<li><a href="/login">로그인</a></li>';
+  }
 }
+
+setHeader();
 insertHeader();
 insertFooter();
 initEventListeners();
@@ -18,10 +29,12 @@ async function handleLogout() {
   try {
     const result = await Api.post("/api/users/logout");
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("isAdmin");
     alert(result.message);
   } catch (err) {
     alert("로그인 상태가 아닙니다");
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("isAdmin");
   }
 }
 function initEventListeners() {
@@ -42,9 +55,9 @@ function insertHeader() {
         </div>
         <div class="header-menu">
           <ul>
-            <li><a href="/shoppingCart">장바구니</a></li>
-            ${page}
-            ${loginOut}
+            ${header1}
+            ${header2}
+            ${header3}
           </ul>
         </div>
       </div>

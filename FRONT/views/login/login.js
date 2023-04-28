@@ -35,8 +35,10 @@ async function handleLogin(e) {
         const result = await Api.post("/api/users/login", data);
         const token = result.token;
         const userName = result.user.name
+        const isAdmin = result.user.isAdmin;
 
         sessionStorage.setItem("token", token);
+        sessionStorage.setItem("isAdmin", isAdmin);
         alert(`${userName}님, 어서오세요!`);
         window.location.href = "/";
     }catch(err){
