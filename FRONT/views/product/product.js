@@ -53,13 +53,16 @@ ${productQuantity}개 추가로 담았어요.`
       // 장바구니에 없는 새로운 상품일 때
       addNewProduct(cart);
       alert(
-        `${product.productName}상품이 장바구니에 ${productQuantity}개 담겼습니다.`
+        `${product.productName}상품을 장바구니에 ${productQuantity}개 담았어요.`
       );
     }
   } else {
     // 장바구니에 아무런 상품도 없을 때
     cart = [];
     addNewProduct(cart);
+    alert(
+      `${product.productName}상품을 장바구니에 ${productQuantity}개 담았어요.`
+    );
   }
   window.localStorage.setItem("cart", JSON.stringify(cart));
 };
