@@ -1,11 +1,10 @@
-const navMenu = document.querySelectorAll("nav a");
+const navMenu = document.querySelector(".mypage-navbar");
+let selectedMenu = navMenu.querySelector(".active");
 
-navMenu.forEach((menu) => {
-  menu.addEventListener("click", (e) => {
-    const active = document.querySelector("nav a.active");
-    if (active) {
-      active.classList.remove("active");
-    }
-    e.target.classList.add("active");
-  });
+navMenu.addEventListener("click", (e) => {
+  if (selectedMenu) {
+    selectedMenu.classList.remove("active");
+  }
+  selectedMenu = e.target;
+  selectedMenu.classList.add("active");
 });

@@ -1,14 +1,14 @@
 import * as Api from "./api.js";
-
+const body = document.querySelector("body");
 const isLogin = sessionStorage.getItem("token");
 const isAdmin = sessionStorage.getItem("isAdmin");
 let header1;
 let header2;
 let header3;
-function setHeader(){
-  if (isAdmin === 'true') {
+function setHeader() {
+  if (isAdmin === "true") {
     header1 = '<li><a href="/adminpage/product">사이트관리</a></li>';
-  } else{
+  } else {
     header1 = '<li><a href="/shoppingCart">장바구니</a></li>';
   }
   if (isLogin) {
@@ -72,7 +72,7 @@ function insertHeader() {
       </nav>
     </header>`;
 
-  document.querySelector("body").insertAdjacentHTML("afterbegin", header);
+  body.insertAdjacentHTML("afterbegin", header);
 }
 
 function insertFooter() {
@@ -93,5 +93,5 @@ function insertFooter() {
       </div>
     </footer>`;
 
-  document.querySelector("body").insertAdjacentHTML("beforeend", footer);
+  body.insertAdjacentHTML("beforeend", footer);
 }
