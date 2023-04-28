@@ -26,14 +26,6 @@ router.post("/create-order", async (req, res) => {
   }
 });
 
-function calculateTotalPrice(orderItems) {
-  let totalPrice = 0;
-  for (const item of orderItems) {
-    totalPrice += item.price * item.quantity;
-  }
-  return totalPrice;
-}
-
 // //장바구니 생성 라우터
 // router.post("/create-cart", async (req, res) => {
 //   const orderInfo = req.body;

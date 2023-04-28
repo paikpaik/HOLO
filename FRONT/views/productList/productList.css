@@ -37,3 +37,12 @@
 .card {
   cursor: pointer;
 }
+
+.h2.text-start.fs-4.mt-5 {
+  font-size: 1.2rem!important;
+}
+
+.mt-5 {
+  margin-bottom: 1rem!important;
+  margin-top: 2rem!important;
+}
