@@ -155,6 +155,7 @@ removeProductBtn.addEventListener("click", () => {
     localStorage.setItem("cart", JSON.stringify(nonCheckedProducts));
     location.reload();
   }
+  totalPriceText.innerText = `${totalPrice + 3000}원`;
 });
 
 const purchaseBtnHandler = (e) => {
@@ -189,6 +190,7 @@ const purchaseBtnHandler = (e) => {
   } else if (checkedProducts.length == 0) {
     alert("구매할 상품을 선택해주세요");
   }
+  totalPriceText.innerText = `${totalPrice + 3000}원`;
 };
 
 const removeAllBtnHandler = () => {
@@ -196,6 +198,7 @@ const removeAllBtnHandler = () => {
   productAmount.innerText = `일반구매(0)`;
   localStorage.clear();
   document.querySelector(".container.text-left.cart-container").remove();
+  totalPriceText.innerText = `${totalPrice + 3000}원`;
 };
 
 purchaseBtn.addEventListener("click", purchaseBtnHandler);
