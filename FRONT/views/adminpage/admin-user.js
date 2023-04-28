@@ -11,15 +11,19 @@ async function getUsers() {
 
 function renderUsers(users) {
   users.forEach((user) => {
-    tbodyEl.innerHTML += `
-      <tr>
-        <td>${user.userId}</td>
-        <td>${user.name}</td>
-        <td>
-          <button class="btn btn-outline-success delete-btn" data-id="${user.userId}">삭제</button>
-        </td>
-      </tr>
-    `;
+    if (!user.isAdmin)
+      tbodyEl.innerHTML += `
+        <tr>
+          <td>${user.userId}</td>
+          <td>${user.name}</td>
+          <td>${user.createDate?.split("T")[0]}</td>
+          <td>
+            <button class="btn btn-outline-success delete-btn" data-id="${
+              user.userId
+            }">삭제</button>
+          </td>
+        </tr>
+      `;
   });
 }
 

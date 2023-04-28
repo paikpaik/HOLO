@@ -44,7 +44,7 @@
   margin-right: 5px;
 }
 
-.form-check {
+.product-container .form-check {
   padding-left: 0;
   margin-right: 5px;
 }
@@ -63,6 +63,27 @@ i.bi-check-circle-fill {
 }
 .order-item {
   width: 100%;
+  position: relative;
+}
+
+.accordion-header {
+  position: absolute;
+  bottom: 0px;
+  right: 2px;
+}
+
+.accordion-button {
+  padding: 7px;
+  background: none;
+}
+
+.accordion-button:not(.collapsed) {
+  background: none;
+  border: none;
+  color: #969696;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 table {
@@ -91,7 +112,41 @@ div#getOrders {
 }
 
 label {
-  display: block;
+  /* display: block;
   font-size: 18px;
-  text-align: right;
+  text-align: right; */
+}
+
+.order-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-detail p {
+  margin: 5px;
+}
+
+.order-detail > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.order-container {
+  display: flex;
+  margin-bottom: 15px;
+  flex-direction: column;
+}
+
+.product {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 3px;
+}
+
+.product-info.row {
+  margin-bottom: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
 }

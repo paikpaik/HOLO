@@ -41,94 +41,27 @@
           </div>
 
           <div id="orderList" class="menu-contents">
-            <div id="getOrders">
-              <label for="date"
+            <div id="getOrdersByDate">
+              <label for="startDate"
                 >기간
                 <input
                   type="date"
-                  id="date"
+                  id="startDate"
                   max="2077-06-20"
                   min="2023-01-01"
-                  value="2023-04-29"
                 />
                 ~
+              </label>
+              <label for="endDate">
                 <input
                   type="date"
-                  id="date"
+                  id="endDate"
                   max="2077-06-20"
                   min="2023-01-01"
-                  value="2023-04-29"
                 />
               </label>
             </div>
-
-            <div class="product-container">
-              <div class="form-check">
-                <input
-                  class="form-check-input btn-select"
-                  type="checkbox"
-                  id="product1Checked"
-                />
-
-                <label class="form-check-label" for="product1Checked">
-                  <i class="bi bi-check-circle fs-4"></i>
-                </label>
-              </div>
-              <div class="order-item shadow-sm p-3 bg-body-tertiary rounded">
-                <div class="product-info">
-                  <div class="product-img">
-                    <!-- <img src="" alt="상품 이미지" /> -->
-                  </div>
-                  <div class="product-detail">
-                    <h4>상품명</h4>
-                    <p>상품가격/개수</p>
-                  </div>
-                </div>
-
-                <div class="order-item-btn-container">
-                  <button type="button" class="btn btn-outline-success">
-                    수정
-                  </button>
-                  <button type="button" class="btn btn-outline-success">
-                    삭제
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="product-container">
-              <div class="form-check">
-                <input
-                  class="form-check-input btn-select"
-                  type="checkbox"
-                  id="product2Checked"
-                />
-
-                <label class="form-check-label" for="product2Checked">
-                  <i class="bi bi-check-circle fs-4"></i>
-                </label>
-              </div>
-              <div class="order-item shadow-sm p-3 bg-body-tertiary rounded">
-                <div class="product-info">
-                  <div class="product-img">
-                    <!-- <img src="" alt="상품 이미지" /> -->
-                  </div>
-                  <div class="product-detail">
-                    <h4>상품명</h4>
-                    <p>상품가격/개수</p>
-                  </div>
-                </div>
-
-                <div class="order-item-btn-container">
-                  <button type="button" class="btn btn-outline-success">
-                    수정
-                  </button>
-                  <button type="button" class="btn btn-outline-success">
-                    삭제
-                  </button>
-                </div>
-              </div>
-            </div>
+            <div class="order-list-container"></div>
           </div>
         </div>
       </div>
