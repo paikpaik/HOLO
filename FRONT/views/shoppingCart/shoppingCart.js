@@ -190,6 +190,7 @@ const purchaseBtnHandler = (e) => {
 
 const removeAllBtnHandler = () => {
   localStorage.clear();
+  document.querySelector(".container.text-left.cart-container").remove();
 };
 
 purchaseBtn.addEventListener("click", purchaseBtnHandler);
