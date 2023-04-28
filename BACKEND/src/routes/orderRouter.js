@@ -7,6 +7,14 @@ const loginRequired = require("../middlewares/login-required"); // 로그인 확
 router.post("/create-order", async (req, res) => {
   try {
     const orderInfo = req.body;
+    function calculateTotalPrice(orderItems) {
+      let totalPrice = 0;
+      for (const item of orderItems) {
+        totalPrice += item.price * item.quantity;
+      }
+      return totalPrice;
+    }
+
     const totalPrice = calculateTotalPrice(orderInfo.orderItems);
 
     if (totalPrice !== orderInfo.totalPrice) {
@@ -14,6 +22,13 @@ router.post("/create-order", async (req, res) => {
     }
 
     const newOrder = await orderService.createOrder(orderInfo);
+    function calculateTotalPrice(orderItems) {
+      let totalPrice = 0;
+      for (const item of orderItems) {
+        totalPrice += item.price * item.quantity;
+      }
+      return totalPrice;
+    }
 
     res.status(200).json({
       message: `OK`,

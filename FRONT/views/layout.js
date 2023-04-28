@@ -88,8 +88,10 @@ function insertFooter() {
       </div>
       <div class="footer-info">
         <p>주소: 서울시 강남구 삼성동</p>
-        <p>전화번호: 02-1234-5678</p>
         <p>이메일: contact@holo.com</p>
+        <p>김소현 노재열 엄윤주 이하경 임현준 최현준</p>
+        <p>ㅤ</p>
+        <p>©2023 Elice Engineer Track SW4</p>
       </div>
     </footer>`;
 

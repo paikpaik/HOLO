@@ -125,7 +125,11 @@ a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
+  font-size: 11px;
+}
+
+.footer-info {
+  text-align: center;
 }
 
 .footer-menu {
@@ -188,6 +192,8 @@ img#logo {
 .card img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+
   object-fit: cover;
 }
 
