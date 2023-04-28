@@ -24,6 +24,7 @@ async function getData() {
   try {
     const product = await Api.get(`/api/products/${productId}`);
     printData(product);
+    printData(product);
     console.log(product);
     return product;
   } catch (e) {}
@@ -85,6 +86,7 @@ const purchaseBtnHandler = async (e) => {
         discountRate: product.discountRate,
       },
     ];
+    sessionStorage.setItem("validAccess", "toPayment");
     window.location.href = `/payment?order=${JSON.stringify(orderitems)}`;
   } catch (e) {
     console.log(e);

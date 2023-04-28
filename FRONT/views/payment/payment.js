@@ -9,7 +9,13 @@ const detailAddress = document.querySelector("#detailAddress");
 const receiverRequirement = document.querySelector("#receiverRequirement");
 const paymentBtn = document.querySelector("#paymentBtn");
 const isLogin = sessionStorage.getItem('token');
+const isValid = sessionStorage.getItem('validAccess') === 'toPayment';
 
+if (!isValid){
+    history.back();
+    alert("잘못된 접근입니다");
+}
+sessionStorage.removeItem('validAccess');
 const {orderItems, totalPrice, totalDiscount} = getOrderData();
 setData(totalPrice, totalDiscount);
 paymentBtn.addEventListener("click", handlePayment);
@@ -105,6 +111,7 @@ async function handlePayment(e) {
         const { order } = await Api.post("/api/order/create-order", data);
         const { _id } = order;
         const orderId = JSON.stringify({_id : _id, email: email});
+        sessionStorage.setItem("validAccess", "toOrderCompleted");
         window.location.href = `/order-completed?orderId=${orderId}`;
     } catch (err) {
         console.log(`err: ${err}`);

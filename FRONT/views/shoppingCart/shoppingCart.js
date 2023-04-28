@@ -163,6 +163,7 @@ const purchaseBtnHandler = (e) => {
   if (nonCheckedProducts.length >= 1) {
     nonCheckedProducts;
     localStorage.setItem("cart", JSON.stringify(nonCheckedProducts));
+    sessionStorage.setItem("validAccess", "toPayment");
     window.location.href = `/payment?order=${JSON.stringify(orderitems)}`;
 
     e.preventDefault();

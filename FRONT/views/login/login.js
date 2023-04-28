@@ -40,7 +40,7 @@ async function handleLogin(e) {
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("isAdmin", isAdmin);
         alert(`${userName}님, 어서오세요!`);
-        window.location.href = "/";
+        history.back();
     }catch(err){
         alert(err.message);
     }
