@@ -11,8 +11,8 @@ const checkTotal = document.querySelector(".form-check-label.all");
 const removeAllBtn = document.querySelector(".btn.btn-warning.remove-all");
 
 const cart = JSON.parse(localStorage.getItem("cart"));
-let totalPrice = 0;
 
+let totalPrice = 0;
 productAmount.innerText = `일반구매(${cart.length})`;
 
 const paintCart = (item) => {
@@ -38,7 +38,7 @@ const paintCart = (item) => {
   >
   -
   </button>
-  <p class="quantity">${quantity}</p>
+  <p class="quantity asdf">${quantity}</p>
   <button
   type="button"
   class="btn btn-secondary btn-sm increase-btn"
@@ -166,16 +166,19 @@ const purchaseBtnHandler = (e) => {
       (input) => input.dataset.id == productName
     );
   });
-  const orderitems = [
-    {
-      productId: cart.productId,
-      productName: cart.productName,
-      price: cart.price,
-      quantity: cart.Quantity,
-      discountRate: cart.discountRate,
-    },
-  ];
+
   if (nonCheckedProducts.length >= 1) {
+    e.preventDefault();
+    const orderitems = [
+      {
+        productId: cart[0].orderItems.productId,
+        productName: cart[0].orderItems.productName,
+        price: cart[0].orderItems.price,
+        quantity: cart[0].orderItems.quantity,
+        discountRate: cart[0].orderItems.discountRate,
+      },
+    ];
+
     nonCheckedProducts;
     localStorage.setItem("cart", JSON.stringify(nonCheckedProducts));
     sessionStorage.setItem("validAccess", "toPayment");
@@ -184,11 +187,12 @@ const purchaseBtnHandler = (e) => {
     e.preventDefault();
   } else if (nonCheckedProducts.length == 0) {
     alert("구매할 상품을 선택해주세요");
-    nonCheckedProducts;
   }
 };
 
 const removeAllBtnHandler = () => {
+  totalPriceText.innerText = `0원`;
+  productAmount.innerText = `일반구매(0)`;
   localStorage.clear();
   document.querySelector(".container.text-left.cart-container").remove();
 };
