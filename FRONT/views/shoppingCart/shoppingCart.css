@@ -18,27 +18,9 @@
   align-items: center;
 }
 
-/* .itemInfoRow {
-  margin: 20px 0 20px 0;
-  align-items: center;
-} */
-
-/* .row {
-  margin: 20px 0 20px 0;
-  align-items: center;
-} */
-/* 
-.form-check {
-  text-align: center;
-} */
-
 .col {
   text-align: center;
 }
-
-/* .d-grid .gap-2 {
-  text-align: left;
-} */
 
 .item-count {
   display: flex;

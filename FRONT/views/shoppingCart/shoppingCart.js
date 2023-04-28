@@ -143,3 +143,33 @@ removeProductBtn.addEventListener("click", () => {
     location.reload();
   }
 });
+
+const purchaseBtnHandler = (e) => {
+  const nonCheckedProducts = cart.filter(({ orderItems }) => {
+    const productName = orderItems.productName;
+    return Array.from(checkedLi).some(
+      (input) => input.dataset.id == productName
+    );
+  });
+  const orderitems = [
+    {
+      productId: cart.productId,
+      productName: cart.productName,
+      price: cart.price,
+      quantity: cart.Quantity,
+      discountRate: cart.discountRate,
+    },
+  ];
+  if (nonCheckedProducts.length >= 1) {
+    nonCheckedProducts;
+    localStorage.setItem("cart", JSON.stringify(nonCheckedProducts));
+    window.location.href = `/payment?order=${orderitems}`;
+
+    e.preventDefault();
+  } else if (nonCheckedProducts.length == 0) {
+    alert("구매할 상품을 선택해주세요");
+    nonCheckedProducts;
+  }
+};
+
+purchaseBtn.addEventListener("click", purchaseBtnHandler);
