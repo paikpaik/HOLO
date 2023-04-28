@@ -10,7 +10,7 @@ passwordInput.addEventListener("input", handlePasswordInputCheck);
 passwordCheckBtn.addEventListener("click", handlePasswordCheck);
 
 const user = await getUserData();
-console.log(user);
+
 async function getUserData() {
   try {
     const data = await Api.get("/api/users/user-info");
@@ -65,7 +65,7 @@ function renderUserModifyForm() {
           type="password"
           class="form-control"
           id="newPassword"
-          placeholder="변경할 비밀번호를 입력해주세요"
+          placeholder="특수문자 포함 8자 이상 입력해주세요"
         />
       </div>
     </div>
@@ -103,6 +103,7 @@ function renderUserModifyForm() {
           class="form-control-plaintext"
           id="phoneNumber"
           value="${phoneNumber}"
+          maxlength="13"
         />
       </div>
       <div class="col-sm-3 btn-container">
@@ -168,18 +169,24 @@ function addFormEventListeners() {
 function checkNewPassword() {
   const newPassword = newPasswordInput.value;
   const confirmPassword = newPasswordCheckInput.value;
-  if (newPassword !== confirmPassword) {
-    newPasswordCheckInput.classList.remove("is-valid");
-    newPasswordCheckInput.classList.add("is-invalid");
-  } else {
+  const hasSpecialChar = /[\W]/.test(newPassword);
+  if (
+    newPassword === confirmPassword &&
+    newPassword.length >= 8 &&
+    hasSpecialChar
+  ) {
     newPasswordCheckInput.classList.remove("is-invalid");
     newPasswordCheckInput.classList.add("is-valid");
+  } else {
+    newPasswordCheckInput.classList.remove("is-valid");
+    newPasswordCheckInput.classList.add("is-invalid");
   }
-  // 둘 다 8자리 이상이면 저장 버튼 활성화
+  // 둘 다 8자리 이상 && 특수 문자 포함이면 저장 버튼 활성화
   if (
     newPassword.length >= 8 &&
     confirmPassword.length >= 8 &&
-    newPassword === confirmPassword
+    newPassword === confirmPassword &&
+    hasSpecialChar
   ) {
     saveBtn.disabled = false;
   } else {
@@ -192,18 +199,18 @@ const modifyPhoneNumber = (phoneNumberInput) => (e) => {
   phoneNumberInput.readOnly = false;
   phoneNumberInput.className = "form-control";
   phoneNumberInput.focus();
+  phoneNumberInput.addEventListener("keyup", autoHypenPhone);
 };
 
 async function handleSave(e) {
   try {
     const data = {
       password: newPassword.value,
-      phoneNumber: phoneNumberInput.value,
+      phoneNumber: phoneNumberInput.value.replace(/[^0-9]/g, ""),
     };
-    const res = await Api.patch("/api/users/update-user-info", "", data);
-    console.log(res);
-    // alert("회원정보가 수정되었습니다.");
-    // location.reload();
+    await Api.patch("/api/users/update-user-info", "", data);
+    alert("회원정보가 수정되었습니다.");
+    location.reload();
   } catch (err) {
     alert(err.message);
   }
@@ -220,5 +227,17 @@ async function handleWithdrawal(e) {
     location.href = "/";
   } catch (err) {
     alert(err.message);
+  }
+}
+
+function autoHypenPhone(e) {
+  let str = e.target.value;
+  str = str.replace(/[^0-9]/g, "");
+  if (str.length < 4) {
+    e.target.value = str;
+  } else if (str.length < 8) {
+    e.target.value = `${str.slice(0, 3)}-${str.slice(3)}`;
+  } else {
+    e.target.value = `${str.slice(0, 3)}-${str.slice(3, 7)}-${str.slice(7)}`;
   }
 }
