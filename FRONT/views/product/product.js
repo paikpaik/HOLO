@@ -85,7 +85,7 @@ const purchaseBtnHandler = async (e) => {
         discountRate: product.discountRate,
       },
     ];
-    window.location.href = `/payment?order=${orderitems}`;
+    window.location.href = `/payment?order=${JSON.stringify(orderitems)}`;
   } catch (e) {
     console.log(e);
   }
