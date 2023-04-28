@@ -15,7 +15,7 @@ function setHeader(){
     header2 = '<li><a href="/mypage">마이페이지</a></li>';
     header3 = '<li><a href="/" class="logout">로그아웃</a></li>';
   } else{
-    header2 = '<li><a href="/">주문조회</a></li>';
+    header2 = '<li><a href="/findorder">주문조회</a></li>';
     header3 = '<li><a href="/login">로그인</a></li>';
   }
 }
