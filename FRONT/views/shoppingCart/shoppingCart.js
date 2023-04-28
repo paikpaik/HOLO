@@ -163,7 +163,7 @@ const purchaseBtnHandler = (e) => {
   if (nonCheckedProducts.length >= 1) {
     nonCheckedProducts;
     localStorage.setItem("cart", JSON.stringify(nonCheckedProducts));
-    window.location.href = `/payment?order=${orderitems}`;
+    window.location.href = `/payment?order=${JSON.stringify(orderitems)}`;
 
     e.preventDefault();
   } else if (nonCheckedProducts.length == 0) {
