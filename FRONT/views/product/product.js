@@ -15,8 +15,6 @@ let cart = JSON.parse(localStorage.getItem("cart"));
 
 let productQuantity = 1;
 
-// example productId
-// const productId = "644a6eebedfeef88f9240690";
 const url = new URL(window.location.href);
 const productId = url.searchParams.get("productId");
 const product = await getData();
@@ -25,7 +23,6 @@ async function getData() {
     const product = await Api.get(`/api/products/${productId}`);
     printData(product);
     printData(product);
-    console.log(product);
     return product;
   } catch (e) {}
 }
@@ -42,16 +39,22 @@ function printData(product) {
 // setStorage
 const addCartItemBtnHandler = async () => {
   if (cart) {
-    console.log(cart);
     const idx = cart.findIndex(
       (m) => m.orderItems.productName === product.productName
     );
     if (idx != -1) {
       // 이미 장바구니에 상품이 있을 때
       cart[idx].orderItems.quantity += productQuantity;
+      alert(
+        `장바구니에 ${product.productName}상품을
+${productQuantity}개 추가로 담았어요.`
+      );
     } else {
       // 장바구니에 없는 새로운 상품일 때
       addNewProduct(cart);
+      alert(
+        `${product.productName}상품이 장바구니에 ${productQuantity}개 담겼습니다.`
+      );
     }
   } else {
     // 장바구니에 아무런 상품도 없을 때
