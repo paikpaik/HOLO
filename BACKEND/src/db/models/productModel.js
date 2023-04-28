@@ -57,6 +57,12 @@ class ProductModel {
       return products;
   }
 
+  // 전체 상품 조회
+  async findByAll(rate) {
+    const products = await Product.find({ discountRate: { $gte: rate } });
+    return products;
+  } 
+
   // 상품 정보 업데이트
   async updateById(productId, updateData) {
     const option = { returnOriginal: false, new: true };

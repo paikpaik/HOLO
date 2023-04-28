@@ -118,6 +118,17 @@ router.get("/popular", async (req, res) => {
   }
 });
 
+// 사용자 전체상품 조회
+router.get("/all", async (req, res) => {
+  try {
+      const result = await productService.getAllProducts(req, res);
+      res.json(result);
+  } catch (err) {
+      console.log(err);
+      res.status(400).json({ message: err.message });
+  }
+});
+
 // 사용자 상품 상세페이지
 router.get("/:productId", async (req, res) => {
   try {

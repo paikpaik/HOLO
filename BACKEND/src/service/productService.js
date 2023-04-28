@@ -169,6 +169,11 @@ class ProductService {
   getPopularProducts(req, res){
     return productModel.findByPurchaseNum(10);
   }
+
+  // 사용자가 전체상품 카테고리를 선택시 모든 상품을 조회
+  getAllProducts(req, res){
+    return productModel.findByAll(0);
+  }
     
   // 사용자가 상품 상제정보 확인
   getProductDetail(req, res){
