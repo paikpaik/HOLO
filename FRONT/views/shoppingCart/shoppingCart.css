@@ -1,0 +1,28 @@
+.box {
+  height: 600px;
+  background-color: #ccc;
+  border: 1px solid black;
+  overflow: scroll;
+}
+
+.box::-webkit-scrollbar {
+  display: none;
+}
+
+.box2 {
+  height: 45px;
+}
+
+.row {
+  margin: 20px 0 20px 0;
+  align-items: center;
+}
+
+.col {
+  text-align: center;
+}
+
+.item-count {
+  display: flex;
+  justify-content: space-around;
+}
