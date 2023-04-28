@@ -1,7 +1,7 @@
 import * as Api from "../api.js";
 
 const categoryItem = document.getElementById("categoryItem");
-const categoryTitle = document.querySelector(".text-start.fs-4.mt-5");
+const categoryTitle = document.querySelector(".text-start.fs-3.mt-5");
 
 const paintCategory = (productList) => {
   productList.forEach((product) => {

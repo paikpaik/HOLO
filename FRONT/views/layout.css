@@ -134,6 +134,7 @@ a:hover {
 
 .footer-menu {
   margin-bottom: 20px;
+  font-size: 12.8px;
 }
 
 .footer-menu ul {
@@ -199,9 +200,9 @@ img#logo {
 
 .text-start.fs-4 {
   color: #263A29;
-  -webkit-animation:blink 1.5s ease-in-out infinite alternate;
-  -moz-animation:blink 1.5s ease-in-out infinite alternate;
-  animation:blink 1.5s ease-in-out infinite alternate;
+  -webkit-animation:blink 1.2s ease-in-out infinite alternate;
+  -moz-animation:blink 1.2s ease-in-out infinite alternate;
+  animation:blink 1.2s ease-in-out infinite alternate;
 }
 
 @-webkit-keyframes blink{
@@ -228,6 +229,11 @@ img#logo {
 .d-flex.flex-column.align-items-center.text-center {
   box-sizing: content-box !important;
 }
+
+.fs-5 {
+  font-size: 1rem!important;
+}
+
 
 .col-4 {
   width: 50%;
@@ -273,3 +279,26 @@ img#logo {
     font-weight: 600;
     font-size: 1.35rem!important;
 }
+
+h2.text-start.fs-3.mt-5 {
+  font-weight: 500;
+  font-size: 1.25rem!important;
+  color: #000;
+  animation:blink 2s ease-in-out alternate;
+}
+
+
+@-webkit-keyframes blink{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@-moz-keyframes blink{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@keyframes blink{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+

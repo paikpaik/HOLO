@@ -52,9 +52,9 @@ const paintCart = (item) => {
   <div class="col">
   <p class="product-price" >${price * quantity}원</p>
   </div>
-  <div class="col">
-  <div>3,000원</div>
-  </div>
+  // <div class="col">
+  // <div>3,000원</div>
+  // </div>
   </div>
   </div>`;
   totalPrice += price * quantity;
