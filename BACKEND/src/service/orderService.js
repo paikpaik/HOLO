@@ -91,7 +91,7 @@ class OrderService {
     function calculateTotalPrice(orderItems) {
       let totalPrice = 0;
       for (const item of orderItems) {
-        totalPrice += item.price * item.quantity;
+        totalPrice += item.price * item.quantity + 3000;
       }
 
       return totalPrice;
