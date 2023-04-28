@@ -2,16 +2,11 @@ import * as Api from '../api.js';
 const isValid = sessionStorage.getItem('validAccess') === 'toOrderCompleted';
 
 if (!isValid){
-    history.back();
+    window.location.href = '/';
     alert("잘못된 접근입니다");
 }
-window.onbeforeunload(() => {
-    sessionStorage.setItem("validAccess", "toOrderCompleted");
-})
-
-// 1. 주문정보 가져오기
-// 2. 상품 요소 만들기
-// 3. 결제금액 연결
+sessionStorage.removeItem('validAccess');
+window.onbeforeunload = () => sessionStorage.setItem('validAccess', 'toPayment');
 await getOrderData();
 
 async function getOrderData() {

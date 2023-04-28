@@ -12,7 +12,7 @@ const isLogin = sessionStorage.getItem('token');
 const isValid = sessionStorage.getItem('validAccess') === 'toPayment';
 
 if (!isValid){
-    history.back();
+    window.location.href = '/';
     alert("잘못된 접근입니다");
 }
 sessionStorage.removeItem('validAccess');
