@@ -21,9 +21,11 @@ setData(totalPrice, totalDiscount);
 paymentBtn.addEventListener("click", handlePayment);
 receiverPhoneNumber.addEventListener("keyup", autoHypenPhone);
 
+let userIdentification
 // 로그인시에는 구매자 정보 띄워줌
 if (isLogin) {
-    const {name, email, phoneNumber, address} = await getData();
+    const {userId, name, email, phoneNumber, address} = await getData();
+    userIdentification = userId;
     const userInfo = `
     <h2 class="fs-5">구매자 정보</h2>
             <section class="mb-3 border border-dark px-4 py-3">
@@ -92,11 +94,11 @@ function setData(totalPrice, totalDiscount) {
 // 결제완료 페이지로 보내기
 async function handlePayment(e) {
     e.preventDefault();
-    const userId = receiverName.value;
     const email = receiverEmail.value;
     const shippingAddress = userAddress.value + ' ' + detailAddress.value;
     const shippingMemo = receiverRequirement.value;
     const status = "pending";
+    const userId = typeof userIdentification === "undefined" ? receiverName.value : userIdentification;
     const data = {
         userId,
         email,
