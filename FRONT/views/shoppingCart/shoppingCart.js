@@ -1,5 +1,5 @@
 const cartItem = document.querySelector(".cart-item");
-const purchaseBtn = document.querySelector(".btn.btn-primary.purchase-btn");
+const purchaseBtn = document.querySelector(".purchase-btn");
 const cartContainer = document.querySelector(".cart-container");
 const checkAll = document.getElementById("allCheck");
 const totalPriceText = document.querySelector(".total-price");
@@ -8,6 +8,7 @@ const increaseBtn = document.querySelector(".increase-btn");
 const removeProductBtn = document.querySelector(".btn.btn-success.remove");
 const productAmount = document.querySelector(".product-amount");
 const checkTotal = document.querySelector(".form-check-label.all");
+const removeAllBtn = document.querySelector(".btn.btn-warning.remove-all");
 
 const cart = JSON.parse(localStorage.getItem("cart"));
 let totalPrice = 0;
@@ -82,6 +83,13 @@ const checkAllHandler = (e) => {
 const increaseBtnHandler = (el, originPrice) => {
   let quantity = el.querySelector(".quantity");
   let productPrice = el.querySelector(".product-price");
+  let productName = el.querySelector(".form-check-input").dataset.id;
+
+  cart.filter(
+    (item) => item.orderItems.productName === productName
+  )[0].orderItems.quantity += 1;
+
+  localStorage.setItem("cart", JSON.stringify(cart));
 
   quantity.innerText = Number(quantity.innerText) + 1;
   productPrice.innerText = originPrice * Number(quantity.innerText) + "원";
@@ -94,6 +102,13 @@ const increaseBtnHandler = (el, originPrice) => {
 const decreaseBtnHandler = (el, originPrice) => {
   let quantity = el.querySelector(".quantity");
   let productPrice = el.querySelector(".product-price");
+  let productName = el.querySelector(".form-check-input").dataset.id;
+
+  cart.filter(
+    (item) => item.orderItems.productName === productName
+  )[0].orderItems.quantity -= 1;
+
+  localStorage.setItem("cart", JSON.stringify(cart));
 
   if (quantity.innerText > 1) {
     quantity.innerText = Number(quantity.innerText) - 1;
@@ -173,4 +188,9 @@ const purchaseBtnHandler = (e) => {
   }
 };
 
+const removeAllBtnHandler = () => {
+  localStorage.clear();
+};
+
 purchaseBtn.addEventListener("click", purchaseBtnHandler);
+removeAllBtn.addEventListener("click", removeAllBtnHandler);
