@@ -7,6 +7,7 @@ const decreaseBtn = document.querySelector(".decrease-btn");
 const increaseBtn = document.querySelector(".increase-btn");
 const removeProductBtn = document.querySelector(".btn.btn-success.remove");
 const productAmount = document.querySelector(".product-amount");
+const checkTotal = document.querySelector(".form-check-label.all");
 
 const cart = JSON.parse(localStorage.getItem("cart"));
 let totalPrice = 0;
@@ -68,10 +69,12 @@ const checkAllHandler = (e) => {
   if (e.target.checked) {
     checkBoxs.forEach((checkbox) => {
       checkbox.checked = true;
+      checkedLi.add(checkbox);
     });
   } else {
     checkBoxs.forEach((checkbox) => {
       checkbox.checked = false;
+      checkedLi.clear();
     });
   }
 };
@@ -104,6 +107,7 @@ const decreaseBtnHandler = (el, originPrice) => {
 
 const productLi = document.querySelectorAll(".container.text-left.li");
 const checkedLi = new Set();
+
 checkAll.addEventListener("change", checkAllHandler);
 
 productLi.forEach((el) => {
@@ -120,6 +124,8 @@ productLi.forEach((el) => {
     } else if (e.target.classList.contains("form-check-input")) {
       if (e.target.checked) {
         checkedLi.add(e.target);
+      } else {
+        checkedLi.delete(e.target);
       }
     }
   });
@@ -132,8 +138,7 @@ removeProductBtn.addEventListener("click", () => {
       (input) => input.dataset.id == productName
     );
   });
-  if (nonCheckedProducts.length > 0) {
-    console.log(nonCheckedProducts);
+  if (nonCheckedProducts.length >= 0) {
     localStorage.setItem("cart", JSON.stringify(nonCheckedProducts));
     location.reload();
   }
