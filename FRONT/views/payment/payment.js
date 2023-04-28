@@ -80,7 +80,7 @@ function getOrderData() {
 function setData(totalPrice, totalDiscount) {
     document.querySelector("#totalPrice").innerText = `${totalPrice} 원`;
     document.querySelector("#totalDiscount").innerText = `-${totalDiscount} 원`;
-    document.querySelector("#totalDiscountPrice").innerText = `${totalPrice - totalDiscount} 원`;
+    document.querySelector("#totalDiscountPrice").innerText = `${totalPrice - totalDiscount + 3000} 원`;
 }
 
 // 결제완료 페이지로 보내기

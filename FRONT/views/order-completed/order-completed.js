@@ -3,7 +3,7 @@ import * as Api from '../api.js';
 // 1. 주문정보 가져오기
 // 2. 상품 요소 만들기
 // 3. 결제금액 연결
-getOrderData();
+await getOrderData();
 
 async function getOrderData() {
     const url = new URL(window.location.href);
@@ -12,9 +12,13 @@ async function getOrderData() {
         const { order } = await Api.get(`/api/order/find-orders/${_id}/${email}`);
         const { orderItems, totalPrice, totalDiscount } = order;
         console.log(orderItems);
-        document.querySelector("#totalPrice").innerText = `${totalPrice - totalDiscount} 원`
+        document.querySelector("#totalPrice").innerText = `${totalPrice - totalDiscount + 3000} 원`
         for(let i = 0; i < orderItems.length; i++){
             if(i > 2){
+                const itemNumber = `<div class="text-end">
+                <div class="fs-5">외 ${orderItems.length - 3}개</div>
+            </div>`
+                document.querySelector("#shippingPrice").insertAdjacentHTML("beforebegin", itemNumber);
                 break;
             }
             const orderItem = orderItems[i];
