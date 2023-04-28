@@ -135,17 +135,22 @@ class ProductService {
   }
     
   // 관리자 상품 삭제
-  async deleteProduct(req, res){
+  async deleteProduct(req, res) {
     const { productId } = req.params;
     const product = await productModel.findByProductId(productId);
     if (!product) {
       throw new Error('해당 상품을 찾을 수 없습니다.');
     }
     // 이미지 파일 삭제
-    const existingImagePaths = product.imagePaths;
-    for (const imagePath of existingImagePaths) {
-      await fs.unlink(imagePath);
+    if (product.imagePaths && product.imagePaths.length > 0) {
+      const existingImagePaths = product.imagePaths;
+      for (const imagePath of existingImagePaths) {
+        if (fs.existsSync(imagePath)) { // 이미지 파일이 존재하는 경우에만 삭제
+          await fs.unlink(imagePath);
+        }
+      }
     }
+    // 상품 삭제
     return productModel.deleteById(productId);
   }
     
