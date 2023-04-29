@@ -15,8 +15,11 @@ async function getAllOrders() {
     renderOrders(ordersObj.ordersWithUser);
     return ordersObj.ordersWithUser;
   } catch (e) {
-    console.log(e);
-    alert("주문 목록을 불러오는데 실패했습니다.");
+    console.log(e.message);
+    if (e.message === "관리자 권한이 필요합니다.") {
+      sessionStorage.setItem("isAdmin", false);
+      location.href = "/";
+    }
   }
 }
 

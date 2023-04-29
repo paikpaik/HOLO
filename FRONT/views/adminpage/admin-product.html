@@ -39,86 +39,78 @@
             <h3>상품 관리</h3>
           </div>
 
-          <div id="orderList" class="menu-contents">
+          <div class="menu-contents">
             <div class="btn-container row">
-              <div class="col">
-                <button class="btn-select-all">
-                  <i class="bi bi-check-circle fs-4"></i>
-                  <p>전체 선택</p>
-                </button>
-              </div>
+              <div class="col"></div>
               <div class="col btn-management-container">
-                <button class="btn btn-light btn-product-delete">
-                  상품 삭제
+                <button
+                  class="btn btn-light btn-product-add"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addProductModal"
+                >
+                  상품 등록
                 </button>
-                <button class="btn btn-light btn-product-add">상품 등록</button>
               </div>
             </div>
+            <div class="product-list"></div>
 
-            <div class="product-container">
-              <div class="form-check">
-                <input
-                  class="form-check-input btn-select"
-                  type="checkbox"
-                  id="product1Checked"
-                />
-
-                <label class="form-check-label" for="product1Checked">
-                  <i class="bi bi-check-circle fs-4"></i>
-                </label>
-              </div>
-              <div class="order-item shadow-sm p-3 bg-body-tertiary rounded">
-                <div class="product-info">
-                  <div class="product-img">
-                    <!-- <img src="" alt="상품 이미지" /> -->
+            <div class="modal fade" tabindex="-1" id="addProductModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">상품</h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
                   </div>
-                  <div class="product-detail">
-                    <h4>상품명</h4>
-                    <p>상품가격/개수</p>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="productName">상품명</label>
+                      <input
+                        type="text"
+                        id="productName"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="category">카테고리</label>
+                      <input type="text" id="category" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                      <label for="price">가격</label>
+                      <input type="text" id="price" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                      <label for="discountRate">할인율</label>
+                      <input
+                        type="text"
+                        id="discountRate"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="shortDesc">상품 요약 설명</label>
+                      <input type="text" id="shortDesc" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                      <label for="longDesc">상품 상세</label>
+                      <input type="text" id="longDesc" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="stock">재고</label>
+                      <input type="text" id="stock" class="form-control" />
+                    </div>
                   </div>
-                </div>
-
-                <div class="order-item-btn-container">
-                  <button type="button" class="btn btn-outline-success">
-                    수정
-                  </button>
-                  <button type="button" class="btn btn-outline-success">
-                    삭제
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="product-container">
-              <div class="form-check">
-                <input
-                  class="form-check-input btn-select"
-                  type="checkbox"
-                  id="product2Checked"
-                />
-
-                <label class="form-check-label" for="product2Checked">
-                  <i class="bi bi-check-circle fs-4"></i>
-                </label>
-              </div>
-              <div class="order-item shadow-sm p-3 bg-body-tertiary rounded">
-                <div class="product-info">
-                  <div class="product-img">
-                    <!-- <img src="" alt="상품 이미지" /> -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-success btn-add">
+                      등록하기
+                    </button>
                   </div>
-                  <div class="product-detail">
-                    <h4>상품명</h4>
-                    <p>상품가격/개수</p>
-                  </div>
-                </div>
-
-                <div class="order-item-btn-container">
-                  <button type="button" class="btn btn-outline-success">
-                    수정
-                  </button>
-                  <button type="button" class="btn btn-outline-success">
-                    삭제
-                  </button>
                 </div>
               </div>
             </div>

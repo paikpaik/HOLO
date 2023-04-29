@@ -55,6 +55,7 @@ class OrderService {
   //     throw new Error("상품 재고가 부족합니다.");
   //   }
   // }
+
   async createOrder(req) {
     const {
       userId,
@@ -87,12 +88,12 @@ class OrderService {
     if (totalPrice !== dbTotalPrice) {
       throw new Error("주문 가격이 일치하지 않습니다.");
     }
-
     function calculateTotalPrice(orderItems) {
       let totalPrice = 0;
       for (const item of orderItems) {
         totalPrice += item.price * item.quantity;
       }
+
       return totalPrice;
     }
 

@@ -11,9 +11,10 @@ const checkTotal = document.querySelector(".form-check-label.all");
 const removeAllBtn = document.querySelector(".btn.btn-warning.remove-all");
 
 const cart = JSON.parse(localStorage.getItem("cart"));
-let totalPrice = 0;
+console.log(cart);
 
-productAmount.innerText = `일반구매(${cart.length})`;
+let totalPrice = 0;
+productAmount.innerText = `장바구니 상품(${cart.length})`;
 
 const paintCart = (item) => {
   const { productName, price, quantity } = item.orderItems;
@@ -38,7 +39,7 @@ const paintCart = (item) => {
   >
   -
   </button>
-  <p class="quantity">${quantity}</p>
+  <p class="quantity asdf">${quantity}</p>
   <button
   type="button"
   class="btn btn-secondary btn-sm increase-btn"
@@ -51,9 +52,6 @@ const paintCart = (item) => {
   
   <div class="col">
   <p class="product-price" >${price * quantity}원</p>
-  </div>
-  <div class="col">
-  <div>3,000원</div>
   </div>
   </div>
   </div>`;
@@ -157,40 +155,50 @@ removeProductBtn.addEventListener("click", () => {
     localStorage.setItem("cart", JSON.stringify(nonCheckedProducts));
     location.reload();
   }
+  totalPriceText.innerText = `${totalPrice + 3000}원`;
 });
 
 const purchaseBtnHandler = (e) => {
-  const nonCheckedProducts = cart.filter(({ orderItems }) => {
+  const checkedProducts = cart.filter(({ orderItems }) => {
     const productName = orderItems.productName;
     return Array.from(checkedLi).some(
       (input) => input.dataset.id == productName
     );
   });
-  const orderitems = [
-    {
-      productId: cart.productId,
-      productName: cart.productName,
-      price: cart.price,
-      quantity: cart.Quantity,
-      discountRate: cart.discountRate,
-    },
-  ];
-  if (nonCheckedProducts.length >= 1) {
-    nonCheckedProducts;
-    localStorage.setItem("cart", JSON.stringify(nonCheckedProducts));
+  console.log(checkedProducts);
+  if (checkedProducts.length >= 1) {
+    e.preventDefault();
+
+    const itemArray = [];
+
+    checkedProducts.forEach(({ orderItems }) => {
+      let productItem = {
+        productId: orderItems.productId,
+        productName: orderItems.productName,
+        price: orderItems.price,
+        quantity: orderItems.quantity,
+        discountRate: orderItems.discountRate,
+      };
+      itemArray.push(productItem);
+    });
+
+    localStorage.setItem("cart", JSON.stringify(checkedProducts));
     sessionStorage.setItem("validAccess", "toPayment");
-    window.location.href = `/payment?order=${JSON.stringify(orderitems)}`;
+    window.location.href = `/payment?order=${JSON.stringify(itemArray)}`;
 
     e.preventDefault();
-  } else if (nonCheckedProducts.length == 0) {
+  } else if (checkedProducts.length == 0) {
     alert("구매할 상품을 선택해주세요");
-    nonCheckedProducts;
   }
+  totalPriceText.innerText = `${totalPrice + 3000}원`;
 };
 
 const removeAllBtnHandler = () => {
+  totalPriceText.innerText = `0원`;
+  productAmount.innerText = `일반구매(0)`;
   localStorage.clear();
   document.querySelector(".container.text-left.cart-container").remove();
+  totalPriceText.innerText = `${totalPrice + 3000}원`;
 };
 
 purchaseBtn.addEventListener("click", purchaseBtnHandler);

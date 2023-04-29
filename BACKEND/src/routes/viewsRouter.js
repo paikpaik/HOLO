@@ -8,8 +8,6 @@ viewsRouter.use("/", serveStatic("home"));
 
 viewsRouter.use("/register", serveStatic("register"));
 viewsRouter.use("/login", serveStatic("login"));
-viewsRouter.use("/mypage", serveStatic("mypage"));
-viewsRouter.use("/userModify", serveStatic("userModify"));
 viewsRouter.use("/payment", serveStatic("payment"));
 viewsRouter.use("/product", serveStatic("product"));
 viewsRouter.use("/productList", serveStatic("productList"));
@@ -21,6 +19,9 @@ viewsRouter.use("/findorder", serveStatic("findorder"));
 viewsRouter.use("/adminpage/product", serveAdminStatic("product"));
 viewsRouter.use("/adminpage/user", serveAdminStatic("user"));
 viewsRouter.use("/adminpage/order", serveAdminStatic("order"));
+
+viewsRouter.use("/mypage/order", serveUserStatic("order"));
+viewsRouter.use("/mypage/modify", serveUserStatic("modify"));
 
 viewsRouter.use("/public/images", serveImage("/"));
 
@@ -43,12 +44,20 @@ function serveAdminStatic(resource) {
 
   return express.static(resourcePath, option);
 }
-function serveImage(resource){
+
+function serveUserStatic(resource) {
   const resourcePath = path.join(
-      __dirname,
-      `../../../public/images`
+    __dirname,
+    `../../../FRONT/views/mypage/mypage-${resource}.html`
   );
-  const option = { index: `${resource}`};
+  const option = { index: `mypage-${resource}.html` };
+
+  return express.static(resourcePath, option);
+}
+
+function serveImage(resource) {
+  const resourcePath = path.join(__dirname, `../../../public/images`);
+  const option = { index: `${resource}` };
 
   return express.static(resourcePath, option);
 }

@@ -53,6 +53,7 @@ class ProductService {
       purchaseNum,
       stock,
     } = req.body;
+
     const imagePaths = req.files.map((file) => file.path);
 
     const createInfo = {
@@ -124,28 +125,26 @@ class ProductService {
     for (const imagePath of existingImagePaths) {
       await fs.unlink(imagePath); // 이미지 파일 삭제
     }
-    
+
     // 새로운 이미지 저장
     const allImagePaths = imagePaths;
     // 이미지 정보 업데이트
-    return productModel.updateById(
-      productId,
-      { imagePaths: allImagePaths }
-    );
+    return productModel.updateById(productId, { imagePaths: allImagePaths });
   }
-    
+
   // 관리자 상품 삭제
   async deleteProduct(req, res) {
     const { productId } = req.params;
     const product = await productModel.findByProductId(productId);
     if (!product) {
-      throw new Error('해당 상품을 찾을 수 없습니다.');
+      throw new Error("해당 상품을 찾을 수 없습니다.");
     }
     // 이미지 파일 삭제
     if (product.imagePaths && product.imagePaths.length > 0) {
       const existingImagePaths = product.imagePaths;
       for (const imagePath of existingImagePaths) {
-        if (fs.existsSync(imagePath)) { // 이미지 파일이 존재하는 경우에만 삭제
+        if (fs.existsSync(imagePath)) {
+          // 이미지 파일이 존재하는 경우에만 삭제
           await fs.unlink(imagePath);
         }
       }
@@ -153,35 +152,35 @@ class ProductService {
     // 상품 삭제
     return productModel.deleteById(productId);
   }
-    
+
   // 사용자 카테고리 조회
-  getCategoryList(req, res){
+  getCategoryList(req, res) {
     return productModel.findAllCategories();
   }
-    
+
   // 사용자가 특정 카테고리를 선택시 카테고리의 속한 모든 상품을 조회
-  getProductList(req, res){
+  getProductList(req, res) {
     const { category } = req.params;
     return productModel.findByCategory(category);
   }
-    
+
   // 사용자가 할인상품 카테고리를 선택시 discountRate 30%이상인 모든 상품을 조회
-  getDiscountedProducts(req, res){
+  getDiscountedProducts(req, res) {
     return productModel.findByDiscountRate(30);
   }
-    
+
   // 사용자가 인기상품 카테고리를 선택시 purchaseNum 10이상인 모든 상품을 조회
-  getPopularProducts(req, res){
+  getPopularProducts(req, res) {
     return productModel.findByPurchaseNum(10);
   }
 
   // 사용자가 전체상품 카테고리를 선택시 모든 상품을 조회
-  getAllProducts(req, res){
+  getAllProducts(req, res) {
     return productModel.findByAll(0);
   }
-    
+
   // 사용자가 상품 상제정보 확인
-  getProductDetail(req, res){
+  getProductDetail(req, res) {
     const { productId } = req.params;
     return productModel.findByProductId(productId);
   }

@@ -5,8 +5,17 @@ const tbodyEl = document.querySelector("tbody");
 getUsers();
 
 async function getUsers() {
-  const usersObj = await Api.get("/api/admin/all-users");
-  renderUsers(usersObj.users);
+  try {
+    const usersObj = await Api.get("/api/admin/all-users");
+    renderUsers(usersObj.users);
+  } catch (e) {
+    alert(e.message);
+
+    if (e.message === "관리자 권한이 필요합니다.") {
+      sessionStorage("isAdmin", false);
+      location.href = "/";
+    }
+  }
 }
 
 function renderUsers(users) {

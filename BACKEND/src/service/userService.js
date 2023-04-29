@@ -94,6 +94,11 @@ class UserService {
 
     // 아이디 중복 체크 로직
     async isUserIdDuplicated(userId) {
+
+        if (!this.#isValidUserId(userId)) {
+            throw new Error('아이디는 영어 소문자와 숫자만 입력 가능하며, 최대 길이는 12글자입니다.');
+        }
+
         const existingUserId = await userModel.findByUserId(userId);
         return !!existingUserId;
     }

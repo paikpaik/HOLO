@@ -29,7 +29,6 @@ const productSchema = new Schema({
   imagePaths: [
     {
       type: String,
-      required: true,
     },
   ],
   purchaseNum: {

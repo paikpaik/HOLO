@@ -12,9 +12,9 @@ function setHeader() {
     header1 = '<li><a href="/shoppingCart">장바구니</a></li>';
   }
   if (isLogin) {
-    header2 = '<li><a href="/mypage">마이페이지</a></li>';
+    header2 = '<li><a href="/mypage/order">마이페이지</a></li>';
     header3 = '<li><a href="/" class="logout">로그아웃</a></li>';
-  } else{
+  } else {
     header2 = '<li><a href="/findorder">주문조회</a></li>';
     header3 = '<li><a href="/login">로그인</a></li>';
   }
@@ -88,8 +88,10 @@ function insertFooter() {
       </div>
       <div class="footer-info">
         <p>주소: 서울시 강남구 삼성동</p>
-        <p>전화번호: 02-1234-5678</p>
         <p>이메일: contact@holo.com</p>
+        <p>김소현 노재열 엄윤주 이하경 임정훈 최현준</p>
+        <p>ㅤ</p>
+        <p>©2023 Elice Engineer Track SW4</p>
       </div>
     </footer>`;
 
