@@ -12,9 +12,9 @@ function setHeader() {
     header1 = '<li><a href="/shoppingCart">장바구니</a></li>';
   }
   if (isLogin) {
-    header2 = '<li><a href="/mypage">마이페이지</a></li>';
+    header2 = '<li><a href="/mypage/order">마이페이지</a></li>';
     header3 = '<li><a href="/" class="logout">로그아웃</a></li>';
-  } else{
+  } else {
     header2 = '<li><a href="/findorder">주문조회</a></li>';
     header3 = '<li><a href="/login">로그인</a></li>';
   }

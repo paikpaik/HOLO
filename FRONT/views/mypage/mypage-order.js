@@ -1,77 +1,67 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="./mypage.css" />
-    <link rel="stylesheet" href="../layout.css" />
-    <script src="../layout.js" type="module"></script>
-    <script src="./mypage.js" type="module" defer></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="../searchAddress.js" defer></script>
-  </head>
-  <body>
-    <main>
-      <div class="mypage-contents">
-        <div class="side-menu">
-          <h3>My Page</h3>
-          <nav class="mypage-navbar">
-            <ul>
-              <li><a href="#order" class="active">주문목록/배송조회</a></li>
-              <li><a href="./userModify.html">회원정보 수정</a></li>
-            </ul>
-          </nav>
-        </div>
-        <div class="contents">
-          <div class="menu-title">
-            <h3>주문 목록/배송조회</h3>
-          </div>
-          <div id="orderList" class="menu-contents">
-            <div class="order-item shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-              <div class="product-info">
-                <div class="product-img">
-                  <!-- <img src="" alt="상품 이미지" /> -->
-                </div>
-                <div class="product-detail">
-                  <h4>상품명</h4>
-                  <p>주문번호</p>
-                  <p>상품가격/개수</p>
-                  <p>주문일자</p>
-                  <p>배송상태</p>
-                </div>
-              </div>
+import * as Api from "../api.js";
 
-              <div class="order-item-btn-container">
-                <button type="button" class="btn btn-outline-success">
-                  배송조회
-                </button>
-                <button type="button" class="btn btn-outline-success">
-                  취소하기
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-success"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addressModifyModal"
-                >
-                  배송지 수정
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="modal fade" tabindex="-1" id="addressModifyModal">
+await getOrderList();
+async function getOrderList() {
+  try {
+    const orders = await Api.get("/api/order/find-orders");
+    console.log(orders);
+    renderOrderList(orders);
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+function renderOrderList(orders) {
+  const orderList = document.querySelector("#orderList");
+  orders.forEach((order, idx) => {
+    const {
+      _id,
+      createdAt,
+      orderItems,
+      status,
+      shippingAddress,
+      shippingMemo,
+      totalDiscount,
+      totalPrice,
+    } = order;
+    orderList.innerHTML += `
+    <div class="order-item shadow-sm p-3 mb-5 bg-body-tertiary rounded" data-id="${_id}">
+    <div class="product-info row">
+      <div class="product-detail">
+        <div class="info">
+          <h4 class="col-6">주문번호</h4>
+          <p>${_id}</p>
+        </div>
+        <div class="info">
+          <p class="col-6">상품가격 / 개수</p>
+          <p>총 ${totalPrice}원 / ${orderItems.length}</p>
+        </div>
+        <div class="info">
+          <p class="col-6">주문일자</p>
+          <p>${createdAt?.split("T")[0]}</p>
+        </div>
+        <div class="info">
+          <p class="col-6">배송상태</p>
+          <p>${getDeliveryStatus(status)}</p>
+        </div>
+      </div>
+    </div>
+    <div class="order-item-btn-container show">
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        data-bs-toggle="modal"
+        data-bs-target="#addressModifyModal"
+      >
+        배송지 수정
+      </button>
+      <button type="button" class="btn btn-outline-success btn-cancel">
+        취소하기
+      </button>
+   
+    </div>
+  </div>
+  <div class="modal fade" tabindex="-1" id="addressModifyModal">
             <div class="modal-dialog modal-dialog-centered modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
@@ -163,13 +153,44 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </main>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+    `;
+    const deliveryBtn = document.querySelector(".order-item-btn-container");
+    if (status !== "pending" && status !== "processing") {
+      deliveryBtn.classList.remove("show");
+    }
+  });
+}
+
+function getDeliveryStatus(status) {
+  switch (status) {
+    case "pending":
+      return "결제 전";
+    case "processing":
+      return "배송 준비중";
+    case "shipped":
+      return "배송중";
+    case "delivered":
+      return "배송 완료";
+    case "canceled":
+      return "주문 취소";
+  }
+}
+
+const orderItems = document.querySelectorAll(".order-item");
+orderItems.forEach((orderItem) => {
+  orderItem.addEventListener("click", (e) => {
+    const orderId = orderItem.dataset.id;
+    if (e.target.classList.contains("btn-cancel")) {
+      cancelOrder(orderId);
+    }
+  });
+});
+
+async function cancelOrder(orderId) {
+  try {
+    const res = await Api.post(`/api/order/find-orders/${orderId}/cancel`);
+    console.log(res);
+  } catch (err) {
+    alert(err.message);
+  }
+}

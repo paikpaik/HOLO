@@ -92,13 +92,23 @@ main {
   margin: 5px;
 }
 
-.order-item .order-item-btn-container {
+.order-item .order-item-btn-container.show {
   display: flex;
   flex-direction: column;
 }
 
 .order-item .order-item-btn-container button {
   margin: 10px 0;
+}
+
+.order-item-btn-container {
+  display: none;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0;
 }
 
 /* 회원정보 수정 */
