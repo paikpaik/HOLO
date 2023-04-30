@@ -17,7 +17,6 @@ const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
     },
     phoneNumber: {
         type: String,
@@ -34,6 +33,10 @@ const UserSchema = new Schema({
     termsAgreed: {
         type: Boolean,
         required: true,
+    },
+    createDate : {
+        type: Date,
+        default: Date.now()
     }
 });
 

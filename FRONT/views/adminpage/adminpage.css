@@ -1,0 +1,162 @@
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.col {
+  padding: 0;
+}
+
+.btn-container {
+  display: flex;
+  margin: 10px 0 15px 0;
+  justify-content: center;
+}
+
+.btn-management-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-light {
+  border: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+.btn-product-delete {
+  margin-right: 20px;
+}
+
+.menu-contents {
+  padding: 20px;
+}
+
+.product-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btn-select-all {
+  background: none;
+  border: none;
+  color: #969696;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.btn-select-all i {
+  margin-right: 5px;
+}
+
+.product-container .form-check {
+  padding-left: 0;
+  margin-right: 5px;
+}
+
+.btn-select {
+  display: none;
+}
+
+i.bi-check-circle {
+  color: #969696;
+  cursor: pointer;
+}
+i.bi-check-circle-fill {
+  color: green;
+  cursor: pointer;
+}
+.order-item {
+  width: 100%;
+  position: relative;
+}
+
+.accordion-header {
+  position: absolute;
+  bottom: 0px;
+  right: 2px;
+}
+
+.accordion-button {
+  padding: 7px;
+  background: none;
+}
+
+.accordion-button:not(.collapsed) {
+  background: none;
+  border: none;
+  color: #969696;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+table {
+  caption-side: bottom;
+  border-collapse: collapse;
+  border: 1px solid;
+  width: 100%;
+  height: 20vh;
+  font-size: 18px;
+  text-align: center;
+}
+th {
+  text-align: -webkit-match-parent;
+  height: 5vh;
+}
+tr:not(:last-child) {
+  border-bottom: 2px solid grey; /* or any other color */
+}
+
+tr:first-child {
+  border-bottom: 2px solid grey; /* or any other color */
+}
+
+div#getOrders {
+  padding-bottom: 2%;
+}
+
+label {
+  /* display: block;
+  font-size: 18px;
+  text-align: right; */
+}
+
+.order-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-detail p {
+  margin: 5px;
+}
+
+.order-detail > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.order-container {
+  display: flex;
+  margin-bottom: 15px;
+  flex-direction: column;
+}
+
+.product {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 3px;
+}
+
+.product-info.row {
+  margin-bottom: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+}
+
+.product-item-btn-container {
+  display: flex;
+  flex-direction: column;
+}

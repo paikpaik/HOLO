@@ -11,7 +11,7 @@ function loginRequired(req, res, next) {
 
         res.status(401).json({
             result: "forbidden-approach",
-            reason: "로그인한 유저만 사용할 수 있는 서비스입니다.",
+            message: "로그인한 유저만 사용할 수 있는 서비스입니다.",
         });
 
         return;
@@ -29,7 +29,7 @@ function loginRequired(req, res, next) {
     } catch (error) {
         res.status(401).json({
             result: "forbidden-approach",
-            reason: "정상적인 토큰이 아닙니다.",
+            message: "정상적인 토큰이 아닙니다.",
         });
 
         return;

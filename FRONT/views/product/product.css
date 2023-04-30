@@ -3,9 +3,9 @@
   align-items: center;
 }
 
-#add-cart-item-btn {
+/* #add-cart-item-btn {
   margin-top: 20px;
-}
+} */
 
 #select-menu {
   margin-top: 100px;
@@ -25,6 +25,7 @@
   display: flex;
   justify-content: center;
 }
+
 .btn-secondary {
   display: flex;
   justify-content: center;
@@ -43,4 +44,52 @@
 .btnAddTxt {
   display: flex;
   justify-content: right;
+}
+
+h2.product-name {
+  font-size: 21px;
+  font-weight: 600;
+}
+
+h3.price {
+  font-size: 20px;
+  text-align: right;
+  padding: 3% 10%;
+  font-weight: 600;
+}
+
+#buyingQuantity {
+  margin: 0;
+  padding: 0 11.2%;
+  text-align: right;
+}
+
+#itemCount {
+  display: flex;
+  align-items: center;
+  float: right;
+  padding: 0 4%;
+}
+
+p#priceTotal {
+  padding: 20% 5% 0 0;
+  text-align: right;
+}
+
+h2.total-price {
+  text-align: right;
+  padding: 0 5% 10%;
+  font-size: 36px;
+}
+
+.css-hxorrg:hover {
+  background-color: #263A29;
+  color: #F1EFE7;
+  border: 1px solid #F1EFE7;
+}
+
+.css-qaxuc4:hover {
+  background-color: #F1EFE7;
+  color: #263A29;
+  border: 1px solid #263A29;
 }

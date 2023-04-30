@@ -1,75 +1,64 @@
-const mongoose = require('mongoose');
-const { Schema } = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 //주문상품 스키마
 const OrderItemSchema = new Schema({
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
-        required: true,
-    },
-    quantity: {
-        type: Number,
-        required: true,
-        default: 1,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-    discountRate: {
-        type: Number,
-        required: true,
-    },
+  productId: {
+    type: String,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    default: 1,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  discountRate: {
+    type: Number,
+    required: true,
+  },
 });
 
-const OrderSchema = new Schema({
-    orderId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Order',
-        required: true,
-    },
+const OrderSchema = new Schema(
+  {
     userId: {
-        type: String,
-        ref: 'User',
-        required: true,
+      type: String,
+      required: false,
+      unique: false,
     },
-    cartId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Cart',
-        required: true,
+    email: {
+      type: String,
+      required: true,
     },
-    orderItems: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'OrderItem',
-        required: true,
-    }],
-    ShippingAddress: {
-        type: String,
-        required: true,
-        default: function () {
-            return this.userId.address;
-        }
+    orderItems: [OrderItemSchema],
+    shippingAddress: {
+      type: String,
+      required: true,
     },
-    status: {
-        type: String,
-        required: true,
-        enum: ['pending', 'processing', 'shipped', 'delivered', 'canceled'],
-        default: 'pending',
+    shippingMemo: {
+      type: String,
     },
     totalPrice: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
     totalDiscount: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
-},
-    {
-        timestamps: true,
-
-    });
+    status: {
+      type: String,
+      required: true,
+      enum: ["pending", "processing", "shipped", "delivered", "canceled"],
+      default: "pending",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = { OrderItemSchema, OrderSchema };
-
